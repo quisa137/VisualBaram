@@ -5,6 +5,7 @@ semantic-ui는 별다른 설정 없이도 React와 호환가능
 http://semantic-ui.com/introduction/integrations.html
 */
 require.config({
+  baseUrl: '/',
   paths:{
     "react":"/modules/react/react-with-addons.min",
     "reactdom":"/modules/react/react-dom.min",
@@ -13,9 +14,10 @@ require.config({
     "semantic":"/modules/semantic-ui/semantic.min",
     "jsx":"/modules/requirejs-react-jsx/jsx",
     "text":"/modules/requirejs/text",
-    "lodash":"/modules/lodash/lodash.min"
+    "lodash":"/modules/lodash/lodash",
+    'd3':"/modules/d3/d3.min"
   },
- shim : {
+  shim : {
     "react": {
       "exports": "React"
     },
@@ -24,6 +26,16 @@ require.config({
     },
     "jquery": {
       "exports":"jQuery"
+    },
+    "lodash": {
+      "exports":"lodash"
+    },
+    "d3": {
+      "exports":"d3"
+    },
+    "semantic": {
+      deps:['jquery'],
+      "exports":"semantic"
     }
   },
   config: {
@@ -33,12 +45,8 @@ require.config({
       fileExtension: ".jsx" // Can be set to anything, like .es6 or .js. Defaults to .jsx
     }
   },
-  deps:['react','reactdom','jquery','babel','semantic'],
+  deps:['react','reactdom','jquery','babel']
 });
 
-require(['jsx!../../ui/init'], function(App){
-
-  var app = new App();
-  app.init();
-
-});
+/* VisualBaram Entry Point */
+requirejs(['/static/init.js']);

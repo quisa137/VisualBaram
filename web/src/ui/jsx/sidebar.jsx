@@ -1,5 +1,5 @@
 define(['react','reactdom','semantic','jquery'],
-  function(React,ReactDOM,semantic,$){
+  function(React,ReactDOM,semantic,$) {
     "use strict";
     class SideBarModule extends React.Component {
       constructor() {

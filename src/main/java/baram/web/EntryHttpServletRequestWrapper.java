@@ -107,7 +107,7 @@ public class EntryHttpServletRequestWrapper extends HttpServletRequestWrapper {
                 } else {
                     isDelimiterAppend = true;
                 }
-                sb.append(delimiter);
+                sb.append(it.next());
             }
             path = sb.toString();
         } else if(this.currentState.equals(State.FRAME)) {
