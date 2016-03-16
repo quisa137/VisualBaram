@@ -1,0 +1,10 @@
+define(['react','semantic','jquery'],
+  function(React,semantic,$) {
+    class xxxModule extends React.Component {
+      render() {
+        return (<div></div>);
+      }
+    }
+    return xxxModule;
+  }
+);

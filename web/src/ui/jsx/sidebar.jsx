@@ -1,6 +1,5 @@
 define(['react','reactdom','semantic','jquery'],
   function(React,ReactDOM,semantic,$) {
-    "use strict";
     class SideBarModule extends React.Component {
       constructor() {
         super();
@@ -27,6 +26,7 @@ define(['react','reactdom','semantic','jquery'],
               Baram
             </a>
           </div>
+
           <div className="ui bottom attached segment pushable">
             <div className="ui inverted labeled icon left inline vertical sidebar menu">
               <a className="item">

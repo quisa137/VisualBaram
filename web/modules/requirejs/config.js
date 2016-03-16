@@ -7,46 +7,41 @@ http://semantic-ui.com/introduction/integrations.html
 require.config({
   baseUrl: '/',
   paths:{
-    "react":"/modules/react/react-with-addons.min",
-    "reactdom":"/modules/react/react-dom.min",
-    "jquery":"/modules/jquery/jquery-1.12.1.min",
-    "babel":"/modules/babeljs/babel.min",
-    "semantic":"/modules/semantic-ui/semantic.min",
-    "jsx":"/modules/requirejs-react-jsx/jsx",
-    "text":"/modules/requirejs/text",
-    "lodash":"/modules/lodash/lodash",
-    'd3':"/modules/d3/d3.min"
+    'react':'/modules/react/react-with-addons',
+    'reactdom':'/modules/react/react-dom',
+    'fetch':'/modules/fetch/fetch',
+    'redux':'/modules/redux/redux.min',
+    'jquery':'/modules/jquery/jquery-1.12.1.min',
+    'babel':'/modules/babeljs/babel.min',
+    'semantic':'/modules/semantic-ui/semantic.min',
+    'jsx':'/modules/requirejs-react-jsx/jsx',
+    'text':'/modules/requirejs/text',
+    'lodash':'/modules/lodash/lodash',
+    'd3':'/modules/d3/d3.min'
   },
   shim : {
-    "react": {
-      "exports": "React"
+    'react': {
+      'exports': 'React'
     },
-    "babel": {
-      "exports":"Babel"
+    'babel': {
+      'exports':'Babel'
     },
-    "jquery": {
-      "exports":"jQuery"
-    },
-    "lodash": {
-      "exports":"lodash"
-    },
-    "d3": {
-      "exports":"d3"
-    },
-    "semantic": {
+    'semantic': {
       deps:['jquery'],
-      "exports":"semantic"
+      'exports':'semantic'
     }
   },
   config: {
     babel: {
-      sourceMaps: "inline", // One of [false, 'inline', 'both']. See https://babeljs.io/docs/usage/options/
+      sourceMaps: 'inline', // One of [false, 'inline', 'both']. See https://babeljs.io/docs/usage/options/
       presets: ['es2015','react'],
-      fileExtension: ".jsx" // Can be set to anything, like .es6 or .js. Defaults to .jsx
+      fileExtension: '.jsx' // Can be set to anything, like .es6 or .js. Defaults to .jsx
     }
   },
-  deps:['react','reactdom','jquery','babel']
+  deps:['react','reactdom','jquery','babel'],
+  callback:function(){
+    /* VisualBaram Entry Point */
+    requirejs(['/static/init.js']);
+  }
 });
 
-/* VisualBaram Entry Point */
-requirejs(['/static/init.js']);
