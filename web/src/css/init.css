@@ -5,3 +5,6 @@
 #content > div {
   height: 100%;
 }
+.ui.main.text.container {
+  margin: 7em auto;
+}

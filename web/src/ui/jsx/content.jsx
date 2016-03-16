@@ -13,6 +13,7 @@ define(['react','semantic','jquery'],
               <label htmlFor="">SearchData</label>
               <textarea name="searchOption" id=""></textarea>
             </div>
+
           </form>
         </div>
         );
