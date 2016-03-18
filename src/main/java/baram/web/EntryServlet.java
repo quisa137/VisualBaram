@@ -2,7 +2,6 @@ package baram.web;
 
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.RequestDispatcher;
@@ -81,18 +80,14 @@ public class EntryServlet  extends HttpServlet {
             */
             Class<AbstractLogic> logicClass = (Class<AbstractLogic>) Class.forName("baram.web.logics." + logicName + "Logic");
             
-            //생성자에 Path 넣기
+            //생성자에 모듈 이름을 뺀 나머지 경로 넣기
             Class[] paramTypes = {String.class};
             Object[] args = {exceptURI};
-            Constructor<AbstractLogic> cons;
-            cons = logicClass.getConstructor(paramTypes);
-            AbstractLogic instance = cons.newInstance(args);
-            instance.process(req,resp);
-            
-        } catch (ClassNotFoundException | InstantiationException | 
-                    IllegalAccessException | IllegalArgumentException | 
-                    InvocationTargetException | NoSuchMethodException | 
-                    SecurityException e) {
+            logicClass.getConstructor(paramTypes).newInstance(args).process(req, resp);
+        } catch (ClassNotFoundException | NoSuchMethodException | 
+                SecurityException | InstantiationException | 
+                IllegalAccessException | IllegalArgumentException | 
+                InvocationTargetException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }        

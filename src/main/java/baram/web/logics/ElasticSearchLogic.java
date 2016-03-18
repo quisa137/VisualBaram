@@ -1,12 +1,11 @@
 package baram.web.logics;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import baram.web.AbstractLogic;
-import baram.web.LogicInterface;
 
 /**
  * 미리 설정된 ElasticSearch URL로 클라이언트에서 보내온 요청을 보내고 그 응답을
@@ -33,14 +31,32 @@ public class ElasticSearchLogic extends AbstractLogic {
     public void process(HttpServletRequest req,HttpServletResponse resp) {
         // TODO Auto-generated method stub
         try {
-            String absoulteURL = "http://192.168.0.124:9200/" + this.getPath() +"?" + req.getQueryString();
+            final String DST_HOST="192.168.0.124",
+                    DST_PORT="9200",
+                    ABS_URL = "http://"+DST_HOST+":"+DST_PORT+this.getPath() +"?" + req.getQueryString();
             
-            
-            System.out.println(absoulteURL);
-            HttpURLConnection conn = (HttpURLConnection)new URL(absoulteURL).openConnection();
+            System.out.println(ABS_URL);
+            HttpURLConnection conn = (HttpURLConnection)new URL(ABS_URL).openConnection();
             conn.setRequestMethod(req.getMethod());
-            conn.setRequestProperty("Content-Type", req.getContentType());
+            conn.setDoInput(true);
             conn.setDoOutput(true);
+            
+            Enumeration<String> i = req.getHeaderNames();
+            
+            //요청 헤더 쓰기
+            while(i.hasMoreElements()){
+                String key = i.nextElement();
+                String value = req.getHeader(key);
+                switch(key.toLowerCase()){
+                case "origin":
+                    value = req.getRemoteAddr(); 
+                    break;
+                case "host":
+                    value = DST_HOST + ":" + DST_PORT;
+                    break;
+                }
+                conn.setRequestProperty(key, value);
+            }
             
             //요청 바디 쓰기
             if(req.getMethod() == "POST") {
@@ -50,6 +66,8 @@ public class ElasticSearchLogic extends AbstractLogic {
             //요청 ElasticSearch로 보낸다.
             conn.connect();
             
+            resp.setStatus(conn.getResponseCode());
+            
             //응답 헤더 쓰기
             Map<String,List<String>> Headers = conn.getHeaderFields();
             Set<String> keys = Headers.keySet();
@@ -57,8 +75,11 @@ public class ElasticSearchLogic extends AbstractLogic {
                 resp.setHeader(key, conn.getHeaderField(key));
             }
             //응답 바디 쓰기
-            this.redirectStream(conn.getInputStream(), resp.getOutputStream());
-            
+            if(conn.getResponseCode() == 200) {
+                this.redirectStream(conn.getInputStream(), resp.getOutputStream());
+            }else if(conn.getResponseCode()>=400){
+                this.redirectStream(conn.getErrorStream(), resp.getOutputStream());
+            }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

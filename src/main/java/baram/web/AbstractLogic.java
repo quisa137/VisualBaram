@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class AbstractLogic implements LogicInterface {
 
     private String path;
+    protected enum HTTP_METHODS {DELETE,HEAD,GET,POST,PUT,TRACE};
     
     public AbstractLogic(String path) {
         // TODO Auto-generated constructor stub
