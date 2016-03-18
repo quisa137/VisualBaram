@@ -2,14 +2,14 @@ package baram.web;
 
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.util.HashMap;
 
 
 /**
@@ -39,32 +39,62 @@ public class EntryServlet  extends HttpServlet {
     }
     @Override
     protected void doGet(HttpServletRequest req,HttpServletResponse resp) throws IOException, ServletException {
-//        final AsyncContext asyncContext = req.startAsync(req, resp);
-//        asyncContext.start(new EntryServletInternal(asyncContext));
-//        System.out.println("Current Time : " + new Date().getTime() +"\n Name : "+ Thread.currentThread().getName()+"\n reqURI : "+req.getRequestURI());
-        
+        this.processServlet(req, resp);
+    }
+    @Override
+    protected void doPost(HttpServletRequest req,HttpServletResponse resp) throws IOException, ServletException {
+        this.processServlet(req, resp);
+    }
+    private void processServlet(HttpServletRequest req,HttpServletResponse resp) throws IOException, ServletException {
+//      final AsyncContext asyncContext = req.startAsync(req, resp);
+//      asyncContext.start(new EntryServletInternal(asyncContext));
+//      System.out.println("Current Time : " + new Date().getTime() +"\n Name : "+ Thread.currentThread().getName()+"\n reqURI : "+req.getRequestURI());
         EntryHttpServletRequestWrapper wrapped = new EntryHttpServletRequestWrapper(req);
         wrapped.setUri(req.getRequestURI());
-        
+          
         if(wrapped.getState().equals(EntryHttpServletRequestWrapper.State.DATA)){
             //TODO : Data에 해당하는 비즈니스 로직을 수행 후, 그 결과를 JSON 형식으로 반환하는 로직 작성
+            this.executeLogic(wrapped.getPath(), req, resp);
         }else{
             //서버 로직 없는 일반 파일들은 모두 기본 디스패처들이 처리하도록 넘긴다. 
             RequestDispatcher rd = getServletContext().getNamedDispatcher("default");
             rd.forward(wrapped, resp);
         }
     }
-    @Override
-    protected void doPost(HttpServletRequest req,HttpServletResponse resp) throws IOException, ServletException {
-//        final AsyncContext asyncContext = req.startAsync(req, resp);
-//        asyncContext.start(new EntryServletInternal(asyncContext));
-    }
-    private HashMap<String,?> executeBL() {
-        return null;
-    }
-    @Override
-    public void destroy() {
-        // TODO Auto-generated method stub
-        super.destroy();
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    private void executeLogic(String uri,HttpServletRequest req,HttpServletResponse resp) {
+        String logicName = "";
+        String exceptURI = "";
+        final String DELIMITER = "/";
+        if(uri.indexOf(DELIMITER) == -1) {
+            logicName = uri;
+        }else{
+            logicName = uri.substring(0, uri.indexOf(DELIMITER));
+            exceptURI = uri.substring(uri.indexOf(DELIMITER)); 
+        }
+        
+        try {
+            /*
+            ServletContext sContext = this.getServletContext();
+            ClassLoader loader = sContext.getClassLoader();
+            Class<LogicInterface> logicClass = (Class<LogicInterface>) loader.loadClass("baram.web.logics." + logicName + "Logic");
+            */
+            Class<AbstractLogic> logicClass = (Class<AbstractLogic>) Class.forName("baram.web.logics." + logicName + "Logic");
+            
+            //생성자에 Path 넣기
+            Class[] paramTypes = {String.class};
+            Object[] args = {exceptURI};
+            Constructor<AbstractLogic> cons;
+            cons = logicClass.getConstructor(paramTypes);
+            AbstractLogic instance = cons.newInstance(args);
+            instance.process(req,resp);
+            
+        } catch (ClassNotFoundException | InstantiationException | 
+                    IllegalAccessException | IllegalArgumentException | 
+                    InvocationTargetException | NoSuchMethodException | 
+                    SecurityException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }        
     }
 }

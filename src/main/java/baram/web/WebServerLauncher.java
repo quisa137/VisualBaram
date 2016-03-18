@@ -29,7 +29,7 @@ public class WebServerLauncher {
         if(webPort == null || webPort.isEmpty()) {
             webPort = "8080";
         }
-        
+        //Baram Visualization
         Tomcat tomcat = new Tomcat();
         //포트 지정
         tomcat.setPort(Integer.valueOf(webPort));
@@ -53,6 +53,13 @@ public class WebServerLauncher {
         ctx.setResources(resources);
         
         tomcat.start();
-        tomcat.getServer().await();
+        
+        //Sematic Docs 해당 프로젝트와는 별도로 구축 개발용 임
+        Tomcat tomcat2 = new Tomcat();
+        tomcat2.setPort(8081);
+        tomcat2.setBaseDir("web/WEB-INF/");
+        tomcat2.addWebapp("", new File("../SematicDocs").getAbsolutePath());
+        tomcat2.start();
+        tomcat2.getServer().await();
 	}
 }

@@ -2,6 +2,9 @@ package baram.web;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 public interface LogicInterface {
-    public HashMap<String,?> process(HashMap<String,?> reqParam);
+    public void process(HttpServletRequest req,HttpServletResponse resp);
 }

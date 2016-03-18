@@ -4,7 +4,11 @@
 	<classpathentry exported="true" kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry exported="true" kind="lib" path="lib/apache-tomcat-8.0.32-embed/ecj-4.4.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/apache-tomcat-8.0.32-embed/tomcat-dbcp.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/apache-tomcat-8.0.32-embed/tomcat-embed-core.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/apache-tomcat-8.0.32-embed/tomcat-embed-core.jar" sourcepath="C:/Users/SGcom/JDK/apache-tomcat-8.0.32-src">
+		<attributes>
+			<attribute name="source_encoding" value="UTF-8"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry exported="true" kind="lib" path="lib/apache-tomcat-8.0.32-embed/tomcat-embed-el.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/apache-tomcat-8.0.32-embed/tomcat-embed-jasper.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/apache-tomcat-8.0.32-embed/tomcat-embed-logging-juli.jar"/>
