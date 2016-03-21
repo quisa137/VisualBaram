@@ -1,3 +1,7 @@
+/**
+ * 이곳에서 레이아웃 구조를 정한다.
+ * Header Content Footer의 순서이다.
+*/
 define(['react','reactdom','jsx!/ui/header','jsx!/ui/content','jsx!/ui/footer'],function(React,ReactDOM,Header,Content,Footer) {
   ReactDOM.render(
     React.createElement(

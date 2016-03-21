@@ -1,5 +1,5 @@
-define(['react','semantic','jquery'],
-  function(React,semantic,$) {
+define(['react'],
+  function(React) {
     class HeaderModule extends React.Component {
       constructor() {
         super();

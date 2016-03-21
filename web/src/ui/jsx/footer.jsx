@@ -1,5 +1,5 @@
-define(['react','semantic','jquery'],
-  function(React,semantic,$) {
+define(['react'],
+  function(React) {
     class FooterModule extends React.Component {
       /*
           <div className="ui center aligned container">

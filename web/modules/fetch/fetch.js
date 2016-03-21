@@ -2,7 +2,7 @@
   'use strict';
 
   if (self.fetch) {
-    return
+    return;
   }
 
   var support = {
