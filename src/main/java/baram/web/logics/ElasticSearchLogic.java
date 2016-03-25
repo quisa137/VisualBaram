@@ -66,10 +66,10 @@ public class ElasticSearchLogic extends AbstractLogic {
             
             //요청 바디 쓰기
             if(req.getMethod() == "POST") {
-                InputStream[] copy = this.copyStream(req.getInputStream(),2);
-//                this.redirectStream(req.getInputStream(), conn.getOutputStream());
-                this.redirectStream(copy[0], conn.getOutputStream());
-                this.debugText(copy[1]);
+                this.redirectStream(req.getInputStream(), conn.getOutputStream());
+//                InputStream[] copy = this.copyStream(req.getInputStream(),2);
+//                this.redirectStream(copy[0], conn.getOutputStream());
+//                this.debugText(copy[1]);
             }
             
             //요청 ElasticSearch로 보낸다.
@@ -84,15 +84,29 @@ public class ElasticSearchLogic extends AbstractLogic {
                 resp.setHeader(key, conn.getHeaderField(key));
             }
             //응답 바디 쓰기
-            if(conn.getResponseCode() == 200) {
+            if(conn.getResponseCode() == 200) { // 정상
                 this.redirectStream(conn.getInputStream(), resp.getOutputStream());
-            }else if(conn.getResponseCode()>=400){
+            }else if(conn.getResponseCode()>=400){ // 에러
                 this.redirectStream(conn.getErrorStream(), resp.getOutputStream());
             }
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    /**
+     * 스트림을 읽어서 바로 쓴다. 이 클래스의 핵심 로직
+     * @param in
+     * @param out
+     * @throws IOException
+     */
+    private void redirectStream(InputStream in,OutputStream out) throws IOException {
+        byte[] by = new byte[BUFFER_SIZE];
+        int len;
+        while((len=in.read(by)) > -1){
+            out.write(by,0,len);
+        }
+        out.flush();
     }
     /**
      * InputStream의 DeepCopy를 담당한다. 순전히 디버그 목적으로 만들었다.
@@ -134,21 +148,6 @@ public class ElasticSearchLogic extends AbstractLogic {
         return null;
       }
     }
-    /**
-     * 스트림을 읽어서 바로 쓴다. 이 클래스의 핵심 로직
-     * @param in
-     * @param out
-     * @throws IOException
-     */
-    private void redirectStream(InputStream in,OutputStream out) throws IOException {
-        byte[] by = new byte[BUFFER_SIZE];
-        int len;
-        while((len=in.read(by)) > -1){
-            out.write(by,0,len);
-        }
-        out.flush();
-    }
-    
     private void debugText(InputStream in) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(in));
         String line = "";

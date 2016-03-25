@@ -19,7 +19,8 @@ require.config({
     'text':'/modules/requirejs/text',
     'lodash':'/modules/lodash/lodash',
     'd3':'/modules/d3/d3.min',
-    'moment':'/modules/moment/moment-with-locales'
+    'moment':'/modules/moment/moment-with-locales',
+    'bluebird':'/modules/bluebird/bluebird.core.min'
   },
   //shim은 amd또는 commonJS의 방식을 지원하지 않는 라이브러리를
   //requirejs에서 지원하기 위해 들어가는 설정이다.
@@ -27,11 +28,13 @@ require.config({
   //두가지인 이유는 표준 위원회에서 정하다 보니 의견이 갈라진 거고
   //어느방식을 쓰더라도 어느정도 지원해준다. 여기서는 amd의 방식을 쓴다.
   shim : {
+    'bluebird':{exports:'Promise'},
     'semantic': {
       deps:['jquery'],
       'exports':'semantic'
     },
     'fetch': {
+      deps:['bluebird'],
       'exports':'fetch'
     }
   },
@@ -42,10 +45,12 @@ require.config({
       fileExtension: '.jsx' // Can be set to anything, like .es6 or .js. Defaults to .jsx
     }
   },
-  deps:['react','reactdom','jquery','babel'],
+  deps:['bluebird','react','reactdom','jquery','babel'],
   callback:function(){
     /* VisualBaram Entry Point */
     requirejs(['/static/init.js']);
+    /* Promise 객체를 전역 변수로 선언(브라우저 이슈 관련) */
+    window.Promise = require('bluebird');
   }
 });
 
