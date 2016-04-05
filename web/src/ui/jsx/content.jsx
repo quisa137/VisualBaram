@@ -1,11 +1,12 @@
-define(['react','jsx!/ui/util/ajaxRequest'],
-  function(React,Ajax) {
+define(['react','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts'],
+  function(React,Ajax,Counts) {
     class ContentModule extends React.Component {
       //생성자
       constructor(props) {
         super(props);
         this.state = {reqBody:'{"index":["logstash-2016.01.29"],"ignore_unavailable":true}\n{"size":500,"sort":[{"@timestamp":{"order":"desc","unmapped_type":"boolean"}}],"query":{"filtered":{"query":{"query_string":{"analyze_wildcard":true,"query":"*"}},"filter":{"bool":{"must":[{"range":{"@timestamp":{"gte":1451624961876,"lte":1454217861877,"format":"epoch_millis"}}}],"must_not":[]}}}},"highlight":{"pre_tags":["@kibana-highlighted-field@"],"post_tags":["@/kibana-highlighted-field@"],"fields":{"*":{}},"require_field_match":false,"fragment_size":2147483647},"aggs":{"2":{"date_histogram":{"field":"@timestamp","interval":"12h","time_zone":"Asia/Tokyo","min_doc_count":0,"extended_bounds":{"min":1451624961876,"max":1454217861877}}}},"fields":["*","_source"],"script_fields":{},"fielddata_fields":["@timestamp","received_at"]}\n{"index":["logstash-2016.01.28"],"search_type":"count","ignore_unavailable":true}\n{"size":0,"sort":[{"@timestamp":{"order":"desc","unmapped_type":"boolean"}}],"query":{"filtered":{"query":{"query_string":{"analyze_wildcard":true,"query":"*"}},"filter":{"bool":{"must":[{"range":{"@timestamp":{"gte":1451624961876,"lte":1454217861877,"format":"epoch_millis"}}}],"must_not":[]}}}},"highlight":{"pre_tags":["@kibana-highlighted-field@"],"post_tags":["@/kibana-highlighted-field@"],"fields":{"*":{}},"require_field_match":false,"fragment_size":2147483647},"aggs":{"2":{"date_histogram":{"field":"@timestamp","interval":"12h","time_zone":"Asia/Tokyo","min_doc_count":0,"extended_bounds":{"min":1451624961876,"max":1454217861877}}}},"fields":["*","_source"],"script_fields":{},"fielddata_fields":["@timestamp","received_at"]}\n'}
         this.reqSearch = this.reqSearch.bind(this); //아래에서 하는 수도 있다.
+        let counts = new Counts('2016-01-01 00:00:00 ~ 2016-01-31 23:59:59');
       }
       reqSearch(e) {
         e.preventDefault();

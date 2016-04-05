@@ -9,79 +9,87 @@ define(['lodash','moment','jsx!/ui/util/ajaxRequest'], function(_,moment,AjaxReq
   class countsLoader{
     constructor(timeText='~'){
       const BAR_CNT_PER_ONE_PAGE = 60;
-      this.dateTimes = _(timeText.split('~')).map(function(item){
-        return moment(dateTimes);
+      this.dateTimes = _.map(timeText.split('~'),function(item){
+        return moment(item);
+      });
+      this.chartInterval = this.setChartInterval();
+      this.getFieldStats().then(this.getIndices);
+    }
+    loadData(searchUri,method,body) {
+      let ajaxReq = new AjaxRequest();
+      return ajaxReq.request({
+        uri:'/api/ElasticSearch/' + searchUri,
+        method:method,
+        body:body
       });
     }
-    getBarChartInterval() {
+    getFieldStats(){
+      let bodyField = {
+        "fields":["@timestamp"],
+        "index_constraints":{
+          "@timestamp":{
+            "max_value":{"gte":this.dateTimes[0].format('x'),"format":"epoch_millis"},
+            "min_value":{"lte":this.dateTimes[1].format('x'),"format":"epoch_millis"}
+          }
+        }
+      };
+
+      return this.loadData('logstash-*/_field_stats?level=indices','POST',JSON.stringify(bodyField));
+    }
+    getIndices(resp){
+      let indices = resp.indices;
+      let bodyField = [
+      {"index":[],"ignore_unavailable":true},
+      {"size":0,"sort":[{"@timestamp":{"order":"desc","unmapped_type":"boolean"}}],"query":{"filtered":{"query":{"query_string":{"analyze_wildcard":true,"query":"*"}},"filter":{"bool":{"must":[{"range":{"@timestamp":{"gte":1451574000000,"lte":1454252399000,"format":"epoch_millis"}}}],"must_not":[]}}}},"highlight":{"pre_tags":["@kibana-highlighted-field@"],"post_tags":["@/kibana-highlighted-field@"],"fields":{"*":{}},"require_field_match":false,"fragment_size":2147483647},"aggs":{"2":{"date_histogram":{"field":"@timestamp","interval":"12h","time_zone":"Asia/Tokyo","min_doc_count":0,"extended_bounds":{"min":1451574000000,"max":1454252399000}}}},"fields":["*","_source"],"script_fields":{},"fielddata_fields":["@timestamp","received_at"]}];
+
+      let LIMIT = 500;
+      let totalDataCnt = 0;
+      for(indexName in indices) {
+        let target = bodyField[0];
+        let options = bodyField[1];
+        target.index[0] = indexName;
+
+        this.loadData(
+          '_msearch?timeout=0&ignore_unavailable=true&preference=1459842496606',
+          'POST',
+          JSON.stringify(target)+'\n'+JSON.stringify(options)+'\n');
+      }
+    }
+    setChartInterval() {
       if(this.dateTimes.length===2) {
         this.dateTimes[1].diff(this.dateTimes[0]);
         let timeDiff = this.dateTimes[1].diff(this.dateTimes[0]),
+          BAR_CNT_PER_ONE_PAGE = 60,
           interval = Math.round(timeDiff/BAR_CNT_PER_ONE_PAGE),
-          units = [1,3,5,10,15,30,45],
-          units2 = _.cloneDeep(units),
-          amounts = [1,1000,60,60,24,30,12,10,10],
-          amounts2 = ['millisecond','second','minute','hour','days','month','year','decade'],
-          minium = 0,
-          finalUnit = 0,
-          compareTarget = 0,
-          multiplex = 0,
-          i = 0,
-          j = 0;
+          amountObj = {
+            'millisecond':1,
+            'second':1000,
+            'minute':60,
+            'hour':60,
+            'days':24,
+            'month':30.416,
+            'year':12,
+            'decade':10
+          },
+          graphInterval = interval,
+          unit = '',
+          keys = _.keys(amountObj),
+          cnt = 0,
+          item = 0;
 
-        console.log('diff :' + timeDiff);
-        console.log("interval : "+interval);
-
-        for(let amount of amounts) {
-          i = 0;
-          for(let unit of units) {
-            console.log("Unit : " + unit + ", Amount : " + amount);
-
-            multiplex = (unit * amount);
-            compareTarget = multiplex/interval;
-            units[i] = multiplex;
-
-            if(compareTarget > 1.5){
-              break;
-            }
-            if(compareTarget<1){
-              if(minium === 0 || minium >= 1-compareTarget){
-                minium = 1 - compareTarget;
-                finalUnit = multiplex;
-              }
-            }else{
-              if(minium === 0 || minium >= compareTarget - 1){
-                minium = compareTarget - 1;
-                finalUnit = multiplex;
-              }
-            }
-
-            console.log(units2[i]+":"+multiplex+":"+compareTarget+":"+minium);
-            i++;
-          }
-          if(compareTarget > 1.5) {
+        for(item of _.values(amountObj)) {
+          let temp = (graphInterval / item);
+          if(temp < 1) {
             break;
-          }else{
-            j++;
+          } else {
+            graphInterval = temp;
+            unit = keys[cnt];
+            cnt++;
           }
         }
-
-        let finalUnitFormatted = '';
-        console.log('Final : '+finalUnit);
-        i = 0;
-        while(Math.floor(finalUnit/amounts[i])>0) {
-          finalUnit = Math.round(finalUnit/amounts[i]);
-          i++;
-        }
-        console.log('FinalFormatted : ' +finalUnit + amounts2[i-1]);
+        return [Math.round(graphInterval),unit];
       }
     }
-    return [finalUnit,finalUnitFormatted];
   }
-  loadData(interval) {
-    let ajaxReq = new AjaxRequest();
-    ajaxReq.request({
-      uri:'/ElasticSearch/'
-    })
-  }
+  return countsLoader;
 });

@@ -47,7 +47,8 @@ define(['react'],
       */
       render() {
         return(
-        <div className="ui inverted vertical footer segment">
+        <div className="ui inverted vertical footer segment middle">
+        ® Copyright. Rights All Reserved by Jindata
         </div>
         );
       }
