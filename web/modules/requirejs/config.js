@@ -20,6 +20,7 @@ require.config({
     'lodash':'/modules/lodash/lodash',
     'd3':'/modules/d3/d3.min',
     'moment':'/modules/moment/moment-with-locales',
+    'moment-timezone':'/modules/moment/moment-timezone-with-data.min',
     'bluebird':'/modules/bluebird/bluebird.core.min'
   },
   //shim은 amd또는 commonJS의 방식을 지원하지 않는 라이브러리를
@@ -43,9 +44,13 @@ require.config({
       sourceMaps: 'inline', // One of [false, 'inline', 'both']. See https://babeljs.io/docs/usage/options/
       presets: ['es2015','react'],
       fileExtension: '.jsx' // Can be set to anything, like .es6 or .js. Defaults to .jsx
+    },
+    moment: {
+      noGlobal: true,
+      locale:'ko'
     }
   },
-  deps:['bluebird','react','reactdom','jquery','babel'],
+  deps:['bluebird','react','reactdom','jquery','babel','moment'],
   callback:function(){
     /* VisualBaram Entry Point */
     requirejs(['/static/init.js']);

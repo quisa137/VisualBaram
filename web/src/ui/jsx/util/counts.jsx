@@ -5,15 +5,19 @@
 3. 인덱스 하나마다 쿼리를 돌려서 카운트를 가져온다.
 4. 결과들을 한 곳에 담아 그래프 컴포넌트에 입력한다.
 **/
-define(['lodash','moment','jsx!/ui/util/ajaxRequest'], function(_,moment,AjaxRequest){
+define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,moment,AjaxRequest){
   class countsLoader{
     constructor(timeText='~'){
       const BAR_CNT_PER_ONE_PAGE = 60;
+      this.currentTimeZone = moment.tz.guess();
       this.dateTimes = _.map(timeText.split('~'),function(item){
         return moment(item);
       });
       this.chartInterval = this.setChartInterval();
-      this.getFieldStats().then(this.getIndices);
+      Promise.resolve('OK')
+        .bind(this)
+        .then(this.getFieldStats)
+        .then(this.getIndices);
     }
     loadData(searchUri,method,body) {
       let ajaxReq = new AjaxRequest();
@@ -40,20 +44,90 @@ define(['lodash','moment','jsx!/ui/util/ajaxRequest'], function(_,moment,AjaxReq
       let indices = resp.indices;
       let bodyField = [
       {"index":[],"ignore_unavailable":true},
-      {"size":0,"sort":[{"@timestamp":{"order":"desc","unmapped_type":"boolean"}}],"query":{"filtered":{"query":{"query_string":{"analyze_wildcard":true,"query":"*"}},"filter":{"bool":{"must":[{"range":{"@timestamp":{"gte":1451574000000,"lte":1454252399000,"format":"epoch_millis"}}}],"must_not":[]}}}},"highlight":{"pre_tags":["@kibana-highlighted-field@"],"post_tags":["@/kibana-highlighted-field@"],"fields":{"*":{}},"require_field_match":false,"fragment_size":2147483647},"aggs":{"2":{"date_histogram":{"field":"@timestamp","interval":"12h","time_zone":"Asia/Tokyo","min_doc_count":0,"extended_bounds":{"min":1451574000000,"max":1454252399000}}}},"fields":["*","_source"],"script_fields":{},"fielddata_fields":["@timestamp","received_at"]}];
+      {
+        "size":0,
+        "sort":[{
+          "@timestamp":{
+            "order":"desc",
+            "unmapped_type":"boolean"
+          }
+        }],
+        "query":{
+          "filtered":{
+            "query":{
+              "query_string":{
+                "analyze_wildcard":true,
+                "query":"*"
+              }
+            },
+            "filter":{
+              "bool":{
+                "must":[{
+                  "range":{
+                    "@timestamp":{
+                      "gte":parseInt(this.dateTimes[0].format('x')),
+                      "lte":parseInt(this.dateTimes[1].format('x')),
+                      "format":"epoch_millis"
+                    }
+                  }
+                }],
+                "must_not":[]
+              }
+            }
+          }
+        },
+        "highlight":{
+          "pre_tags":["@kibana-highlighted-field@"],
+          "post_tags":["@/kibana-highlighted-field@"],
+          "fields":{
+            "*":{}
+          },
+          "require_field_match":false,
+          "fragment_size":2147483647
+        },
+        "aggs":{
+          "2":{
+            "date_histogram":{
+              "field":"@timestamp",
+              "interval":this.chartInterval[0]+this.chartInterval[1],
+              "time_zone":this.currentTimeZone,
+              "min_doc_count":0,
+              "extended_bounds":{
+                "min":parseInt(this.dateTimes[0].format('x')),
+                "max":parseInt(this.dateTimes[1].format('x'))
+              }
+            }
+          }
+        },
+        "fields":["*","_source"],
+        "script_fields":{},
+        "fielddata_fields":["@timestamp","received_at"]
+      }];
 
-      let LIMIT = 500;
-      let totalDataCnt = 0;
+      let LIMIT = 500,
+        totalDataCnt = 0,
+        indexName = '',
+        promises = [];
       for(indexName in indices) {
         let target = bodyField[0];
         let options = bodyField[1];
         target.index[0] = indexName;
 
-        this.loadData(
-          '_msearch?timeout=0&ignore_unavailable=true&preference=1459842496606',
-          'POST',
-          JSON.stringify(target)+'\n'+JSON.stringify(options)+'\n');
+        if(totalDataCnt < LIMIT) {
+          options.size = LIMIT;
+        }else{
+          target['search_type'] = 'count';
+          options.size = 0;
+        }
+        promises.push(
+          this.loadData(
+            '_msearch?timeout=0&ignore_unavailable=true&preference=1459842496606',
+            'POST',
+            JSON.stringify(target)+'\n'+JSON.stringify(options)+'\n')
+        );
+        totalDataCnt += indices[indexName].fields['@timestamp'].doc_count;
       }
+      return promises;
     }
     setChartInterval() {
       if(this.dateTimes.length===2) {
@@ -62,14 +136,14 @@ define(['lodash','moment','jsx!/ui/util/ajaxRequest'], function(_,moment,AjaxReq
           BAR_CNT_PER_ONE_PAGE = 60,
           interval = Math.round(timeDiff/BAR_CNT_PER_ONE_PAGE),
           amountObj = {
-            'millisecond':1,
-            'second':1000,
-            'minute':60,
-            'hour':60,
-            'days':24,
-            'month':30.416,
-            'year':12,
-            'decade':10
+            'S':1,
+            's':1000,
+            'm':60,
+            'h':60,
+            'd':24,
+            'M':30.416,
+            'y':12,
+            '0y':10
           },
           graphInterval = interval,
           unit = '',
