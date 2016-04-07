@@ -8,17 +8,51 @@
 define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,moment,AjaxRequest){
   class countsLoader{
     constructor(timeText='~',react){
-      const BAR_CNT_PER_ONE_PAGE = 60;
+      const this.BAR_CNT_PER_ONE_PAGE = 60;
       this.reactInstance = react;
       this.currentTimeZone = moment.tz.guess();
       this.dateTimes = _.map(timeText.split('~'),function(item){
         return moment(item);
       });
       this.chartInterval = this.setChartInterval();
+      /*
+      아래 Promise들은 일련의 흐름을 나타내며 위에 있는 메소드의 연산결과가 아래의 매개변수에 입력된다.
+      물론, 단독 실행도 가능함
+      bind(this)로 실행 컨텍스트의 일관성을 유지함.
+      즉, Promise의 실행종료시, 컨텍스트도 파괴됨
+      */
       Promise.resolve('OK')
         .bind(this)
         .then(this.getFieldStats)
-        .then(this.getIndices);
+        .then(this.getIndices)
+        .then(this.storeToContainer);
+    }
+    setChartInterval() {
+      if(this.dateTimes.length===2) {
+        this.dateTimes[1].diff(this.dateTimes[0]);
+        let timeDiff = this.dateTimes[1].diff(this.dateTimes[0]),
+          BAR_CNT_PER_ONE_PAGE = 60,
+          interval = Math.round(timeDiff/BAR_CNT_PER_ONE_PAGE),
+          /*아래 변수들은 es의 interval 단위*/
+          amountObj = {'S':1,'s':1000,'m':60,'h':60,'d':24,'M':30.416,'y':12,'0y':10},
+          graphInterval = interval,
+          unit = '',
+          keys = _.keys(amountObj),
+          cnt = 0,
+          item = 0;
+        /*위의 정의된 순서대로 interval값을 나눠서 적절한 단위를 찾아낸다.*/
+        for(item of _.values(amountObj)) {
+          let temp = (graphInterval / item);
+          if(temp < 1) {
+            break;
+          } else {
+            graphInterval = temp;
+            unit = keys[cnt];
+            cnt++;
+          }
+        }
+        return Math.round(graphInterval)+unit;
+      }
     }
     loadData(searchUri,method,body) {
       let ajaxReq = new AjaxRequest();
@@ -128,45 +162,11 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,momen
         );
         totalDataCnt += indices[indexName].fields['@timestamp'].doc_count;
       }
-      return Promise.all(promises).then(function(values){
-        debugger;
-      });
+      return Promise.all(promises);
     }
-    setChartInterval() {
-      if(this.dateTimes.length===2) {
-        this.dateTimes[1].diff(this.dateTimes[0]);
-        let timeDiff = this.dateTimes[1].diff(this.dateTimes[0]),
-          BAR_CNT_PER_ONE_PAGE = 60,
-          interval = Math.round(timeDiff/BAR_CNT_PER_ONE_PAGE),
-          /*아래 변수들은 es의 interval 단위, 정의된 순서대로 interval값을 나눠서 적절한 단위를 찾아낸다.*/
-          amountObj = {
-            'S':1,
-            's':1000,
-            'm':60,
-            'h':60,
-            'd':24,
-            'M':30.416,
-            'y':12,
-            '0y':10
-          },
-          graphInterval = interval,
-          unit = '',
-          keys = _.keys(amountObj),
-          cnt = 0,
-          item = 0;
+    /**/
+    storeToContainer(values) {
 
-        for(item of _.values(amountObj)) {
-          let temp = (graphInterval / item);
-          if(temp < 1) {
-            break;
-          } else {
-            graphInterval = temp;
-            unit = keys[cnt];
-            cnt++;
-          }
-        }
-        return Math.round(graphInterval)+unit;
-      }
     }
   }
   return countsLoader;

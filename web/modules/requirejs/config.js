@@ -50,7 +50,7 @@ require.config({
       locale:'ko'
     }
   },
-  deps:['bluebird','react','reactdom','jquery','babel','moment'],
+  deps:['bluebird','react','reactdom','jquery','babel','moment','redux'],
   callback:function(){
     /* VisualBaram Entry Point */
     requirejs(['/static/init.js']);
