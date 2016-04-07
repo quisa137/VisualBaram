@@ -7,8 +7,9 @@
 **/
 define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,moment,AjaxRequest){
   class countsLoader{
-    constructor(timeText='~'){
+    constructor(timeText='~',react){
       const BAR_CNT_PER_ONE_PAGE = 60;
+      this.reactInstance = react;
       this.currentTimeZone = moment.tz.guess();
       this.dateTimes = _.map(timeText.split('~'),function(item){
         return moment(item);
@@ -89,7 +90,7 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,momen
           "2":{
             "date_histogram":{
               "field":"@timestamp",
-              "interval":this.chartInterval[0]+this.chartInterval[1],
+              "interval":this.chartInterval,
               "time_zone":this.currentTimeZone,
               "min_doc_count":0,
               "extended_bounds":{
@@ -127,7 +128,9 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,momen
         );
         totalDataCnt += indices[indexName].fields['@timestamp'].doc_count;
       }
-      return promises;
+      return Promise.all(promises).then(function(values){
+        debugger;
+      });
     }
     setChartInterval() {
       if(this.dateTimes.length===2) {
@@ -135,6 +138,7 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,momen
         let timeDiff = this.dateTimes[1].diff(this.dateTimes[0]),
           BAR_CNT_PER_ONE_PAGE = 60,
           interval = Math.round(timeDiff/BAR_CNT_PER_ONE_PAGE),
+          /*아래 변수들은 es의 interval 단위, 정의된 순서대로 interval값을 나눠서 적절한 단위를 찾아낸다.*/
           amountObj = {
             'S':1,
             's':1000,
@@ -161,7 +165,7 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,momen
             cnt++;
           }
         }
-        return [Math.round(graphInterval),unit];
+        return Math.round(graphInterval)+unit;
       }
     }
   }
