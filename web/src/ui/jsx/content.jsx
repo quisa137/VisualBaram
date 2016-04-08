@@ -5,6 +5,9 @@ define(['react','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts'],
       constructor(props) {
         super(props);
         let counts = new Counts('2016-01-01 00:00:00 ~ 2016-01-31 23:59:59',this);
+        let values = counts.getValues();
+
+
       }
       handleChange(e) {
         this.setState({reqBody:e.target.value})

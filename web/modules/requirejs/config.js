@@ -21,7 +21,8 @@ require.config({
     'd3':'/modules/d3/d3.min',
     'moment':'/modules/moment/moment-with-locales',
     'moment-timezone':'/modules/moment/moment-timezone-with-data.min',
-    'bluebird':'/modules/bluebird/bluebird.core.min'
+    'bluebird':'/modules/bluebird/bluebird.core.min',
+    'async':'/modules/async/async.min'
   },
   //shim은 amd또는 commonJS의 방식을 지원하지 않는 라이브러리를
   //requirejs에서 지원하기 위해 들어가는 설정이다.

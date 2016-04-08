@@ -1,4 +1,4 @@
-define(['lodash','fetch','bluebird'],function(_,fetch,Promise) {
+define(['lodash','fetch','bluebird','async'],function(_,fetch,Promise,async) {
   class AjaxRequest {
     constructor() {
       this.defaultHeaders = {
@@ -58,6 +58,22 @@ define(['lodash','fetch','bluebird'],function(_,fetch,Promise) {
           return Promise.reject(resp);
         }
       });
+    }
+    /* 여러 요청을 안정적으로 동시에 처리할 때 사용한다.
+     * Async를 이용해서 처리한다.
+     * requests    : 위의 request에 들어갈 요청 항목으로 만든 배열, 즉 JSONArray
+     * async_limit : 동시에 처리할 요청 수
+     * callback    : 처리할 콜백, 향후엔 async-await나 generator로 처리할 예정(callback이 아닌 Promise 리턴을 할 수도 있다는 말)
+    */
+    requestMultiple(requests=[],callback=function(){},async_limit=20) {
+      let cnt = 0,
+          promises = [];
+      let q = async.queue(function(task, callback){
+        this.request(request);
+      },async_limit);
+      for(request in requests) {
+
+      }
     }
   }
   return AjaxRequest;

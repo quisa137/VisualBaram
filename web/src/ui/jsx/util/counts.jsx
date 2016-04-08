@@ -8,7 +8,7 @@
 define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,moment,AjaxRequest){
   class countsLoader{
     constructor(timeText='~',react){
-      const this.BAR_CNT_PER_ONE_PAGE = 60;
+      this.BAR_CNT_PER_ONE_PAGE = 60;
       this.reactInstance = react;
       this.currentTimeZone = moment.tz.guess();
       this.dateTimes = _.map(timeText.split('~'),function(item){
@@ -140,9 +140,13 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,momen
       }];
 
       let LIMIT = 500,
+        REQ_LIMIT = 20,
         totalDataCnt = 0,
         indexName = '',
         promises = [];
+      /*
+      TODO : 요청이 아주 장기간 일 때는 Array에 Promise를 넣기도 전에 Promise의 응답이 오는 사태가 벌어질 수 있다. 일정한 갯수가 되면 반환하고 만들고 하는 형식으로 작업이 되어야 한다.
+      */
       for(indexName in indices) {
         let target = bodyField[0];
         let options = bodyField[1];
@@ -154,19 +158,29 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,momen
           target['search_type'] = 'count';
           options.size = 0;
         }
-        promises.push(
-          this.loadData(
-            '_msearch?timeout=0&ignore_unavailable=true&preference=1459842496606',
-            'POST',
-            JSON.stringify(target)+'\n'+JSON.stringify(options)+'\n')
-        );
+
+
+        let p = this.loadData(
+          '_msearch?timeout=0&ignore_unavailable=true&preference=1459842496606',
+          'POST',
+          JSON.stringify(target)+'\n'+JSON.stringify(options)+'\n')
         totalDataCnt += indices[indexName].fields['@timestamp'].doc_count;
+
+        promises.push(p);
+
+        // if(promises.length > REQ_LIMIT) {
+        //   Promise.bind(this).all(promises).then(this.storeToContainer);
+        // }
+
       }
       return Promise.all(promises);
     }
     /**/
     storeToContainer(values) {
-
+      this.values = values;
+    }
+    getValues() {
+      return this.values;
     }
   }
   return countsLoader;
