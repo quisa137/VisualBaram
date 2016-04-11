@@ -1,16 +1,15 @@
-define(['react','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts'],
-  function(React,Ajax,Counts) {
+define(['react','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts','jsx!/ui/visualization/dateHistogram'],
+  function(React,Ajax,Counts,DateHistogram) {
     class ContentModule extends React.Component {
       //생성자
       constructor(props) {
         super(props);
         let counts = new Counts('2016-01-01 00:00:00 ~ 2016-01-31 23:59:59',this);
-        let values = counts.getValues();
-
-
+        let values = counts.addSubscribe(this.dataMapping.bind(this));
+        //this.dateHistogram = new DateHistogram();
       }
-      handleChange(e) {
-        this.setState({reqBody:e.target.value})
+      dataMapping(data) {
+
       }
       render() {
         /*
@@ -19,6 +18,7 @@ define(['react','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts'],
         */
         return (
         <div className="ui main text container padded grid">
+          <DateHistogram />
         </div>
         );
       }

@@ -12,6 +12,7 @@ require.config({
     'reactdom':'/modules/react/react-dom',
     'fetch':'/modules/fetch/fetch',
     'redux':'/modules/redux/redux.min',
+    'react-redux':'/modules/redux/react-redux.min',
     'jquery':'/modules/jquery/jquery-1.12.1.min',
     'babel':'/modules/babeljs/babel.min',
     'semantic':'/modules/semantic-ui/semantic.min',
@@ -44,7 +45,7 @@ require.config({
     babel: {
       sourceMaps: 'inline', // One of [false, 'inline', 'both']. See https://babeljs.io/docs/usage/options/
       presets: ['es2015','react'],
-      fileExtension: '.jsx' // Can be set to anything, like .es6 or .js. Defaults to .jsx
+      fileExtension: ['.js','.jsx'] // Can be set to anything, like .es6 or .js. Defaults to .jsx
     },
     moment: {
       noGlobal: true,

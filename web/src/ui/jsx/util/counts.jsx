@@ -175,9 +175,22 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,momen
       }
       return Promise.all(promises);
     }
+    addSubscribe(callback) {
+      if(this.callbacks === undefined) {
+        this.callbacks = [];
+      }
+      this.callbacks.push(callback);
+    }
     /**/
     storeToContainer(values) {
       this.values = values;
+      if(_.isArray(this.callbacks)) {
+        for(let callback of this.callbacks) {
+          if(_.isFunction(callback)) {
+            callback(this.values);
+          }
+        }
+      }
     }
     getValues() {
       return this.values;

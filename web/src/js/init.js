@@ -7,17 +7,35 @@
  * 이곳에서 레이아웃 구조를 정한다.
  * Header Content Footer의 순서이다.
 */
-define(['react','reactdom','jsx!/ui/header','jsx!/ui/content','jsx!/ui/footer'],function(React,ReactDOM,Header,Content,Footer) {
+define([
+  'react',
+  'reactdom',
+  'jsx!/ui/header',
+  'jsx!/ui/content',
+  'jsx!/ui/footer',
+  'redux',
+  'react-redux',
+  '/static/reducer/index.js'],function(
+    React,
+    ReactDOM,
+    Header,
+    Content,
+    Footer,
+    Redux,
+    Provider,
+    RootReducer) {
+  const store = Redux.createStore(RootReducer);
   ReactDOM.render(
     React.createElement(
       "div",
-      null,
+      store,
       React.createElement(Header, null),
       React.createElement(Content, null),
       React.createElement(Footer, null)
     ),
     document.getElementById("content")
   );
+
 });
 
 /*
