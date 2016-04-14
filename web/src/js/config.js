@@ -54,10 +54,10 @@ require.config({
   },
   deps:['bluebird','react','reactdom','jquery','babel','moment','redux'],
   callback:function(){
-    /* VisualBaram Entry Point */
-    requirejs(['/static/init.js']);
     /* Promise 객체를 전역 변수로 선언(브라우저 이슈 관련) */
     window.Promise = require('bluebird');
+    /* VisualBaram Entry Point */
+    requirejs(['/static/init.js']);
   }
 });
 

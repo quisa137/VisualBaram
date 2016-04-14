@@ -41,10 +41,11 @@ public class WebServerLauncher {
         
         //Servlet 설정 어노테이션으로 하는 방법도 있으나 실행 시점이 불명확함
         Tomcat.addServlet(ctx,"EntryServlet",new EntryServlet());
+//        ctx.addServletMapping("/api/*", "EntryServlet");
         ctx.addServletMapping("/*", "EntryServlet");
 
-//        // Declare an alternative location for your "WEB-INF/classes" dir
-//        // Servlet 3.0 annotation will work
+        // Declare an alternative location for your "WEB-INF/classes" dir
+        // Servlet 3.0 annotation will work
         File additionWebInfClasses = new File("build").getAbsoluteFile();
         WebResourceRoot resources = new StandardRoot(ctx);
         DirResourceSet dirSet = new DirResourceSet(resources, "/WEB-INF/classes", additionWebInfClasses.getAbsolutePath(), "/");
