@@ -3,6 +3,8 @@ package baram.web;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 public abstract class AbstractLogic implements LogicInterface {
 
     private String path;
@@ -18,5 +20,5 @@ public abstract class AbstractLogic implements LogicInterface {
     }
 
     @Override
-    public abstract void process(HttpServletRequest req, HttpServletResponse resp);
+    public abstract void process(HttpServletRequest req, HttpServletResponse resp,JSONObject config);
 }

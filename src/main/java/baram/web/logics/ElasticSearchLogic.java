@@ -19,6 +19,8 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 import baram.web.AbstractLogic;
 
 /**
@@ -32,16 +34,12 @@ public class ElasticSearchLogic extends AbstractLogic {
     public ElasticSearchLogic(String path) {
         super(path);
     }
-
     @Override
-    public void process(HttpServletRequest req,HttpServletResponse resp) {
+    public void process(HttpServletRequest req,HttpServletResponse resp,JSONObject config) {
         // TODO Auto-generated method stub
         try {
-            final String DST_HOST = "192.168.0.124",
-                    DST_PORT = "9200",
-                    ABS_URL = "http://"+DST_HOST+":"+DST_PORT+this.getPath() +"?" + req.getQueryString();
-            
-            //System.out.println(ABS_URL);
+            final String DST_HOST = config.getString("dest"),
+                    ABS_URL = (config.getBoolean("ssl")?"https":"http")+"://"+DST_HOST+this.getPath() +"?" + req.getQueryString();
             HttpURLConnection conn = (HttpURLConnection)new URL(ABS_URL).openConnection();
             conn.setRequestMethod(req.getMethod());
             conn.setDoInput(true);
@@ -54,13 +52,13 @@ public class ElasticSearchLogic extends AbstractLogic {
                 String key = i.nextElement();
                 String value = req.getHeader(key);
                 switch(key.toLowerCase()){
-                case "origin":
-                    value = req.getRemoteAddr(); 
-                    break;
-                case "host":
-                    value = DST_HOST + ":" + DST_PORT;
-                    break;
-                }
+                    case "origin":
+                        value = req.getRemoteAddr(); 
+                        break;
+                    case "host":
+                        value = DST_HOST;
+                        break;
+                    }
                 conn.setRequestProperty(key, value);
             }
             

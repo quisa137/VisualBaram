@@ -1,16 +1,29 @@
-define(['react','reactdom','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts','jsx!/ui/visualization/dateHistogram'],
-  function(React,ReactDOM,Ajax,Counts,DateHistogram) {
+define(['react','reactdom','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts','jsx!/ui/visualization/dateHistogram','jsx!/ui/etc/restclient'],
+  function(React,ReactDOM,Ajax,Counts,DateHistogram,RestClient) {
     class ContentModule extends React.Component {
       //생성자
       constructor(props) {
         super(props);
-        this.state = {'grpdata':[]};
-        let counts = new Counts('2016-01-01 00:00:00 ~ 2016-01-31 23:59:59',this);
+        this.state = {
+          'grpData':{
+            'minDate':'now-2h',
+            'maxDate':'now',
+            'data':[]
+          }
+        };
+        this.dataMapping.bind(this);
+        this.getData();
+      }
+      componentDidMount() {
+        this.timer = setInterval(this.getData.bind(this), 10000);
+        this.isMount = true;
+      }
+      getData() {
+        let counts = new Counts(this.state.grpData.minDate +' ~ ' +this.state.grpData.maxDate,this);
 
         // let values = counts.addSubscribe(this.dataMapping.bind(this));
         //this.dateHistogram = new DateHistogram();
-        this.dataMapping.bind(this);
-        counts.getPromise().bind(this).then(this.dataMapping);
+        counts.getPromise().bind(this).then(this.dataMapping).catch(this.dataMapping);
       }
       dataMapping(data) {
         /*
@@ -18,8 +31,8 @@ define(['react','reactdom','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts','jsx
         되어 있지만 그럴 경우 값 전달이 되지 않는다.
         수동으로 업데이트 한 뒤, setState() 로 React에 통지한다.
         */
-        this.state.grpData = data;
-        this.setState(this.state);
+        //this.state.grpData = data;
+        this.setState({'grpData':Object.assign(this.state.grpData,data)});
       }
       render() {
         /*
@@ -31,17 +44,24 @@ define(['react','reactdom','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts','jsx
         if(_.isObjectLike(this.grpData)) {
           Object.assign(grpData,this.grpData);
         }
+        <RestClient />
         */
 
         return (
         <div className="ui main text container padded grid">
-          <DateHistogram grpData={this.state.grpData} />
+          <div className="center">
+            <ul>
+              <li><span>From to : </span>( {this.state.grpData.minDate} ~ {this.state.grpData.maxDate} )</li>
+              <li><span>Interval : </span>{this.state.grpData.interval}</li>
+            </ul>
+          </div>
+          <DateHistogram grpData={this.state.grpData}/>
         </div>
         );
       }
     }
     ContentModule.propTypes = {
-      grpData:React.PropTypes.array
+      grpData:React.PropTypes.object
     };
     return ContentModule;
   }

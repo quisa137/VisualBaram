@@ -5,17 +5,22 @@
 3. 인덱스 하나마다 쿼리를 돌려서 카운트를 가져온다.
 4. 결과들을 한 곳에 담아 그래프 컴포넌트에 입력한다.
 **/
-define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,moment,AjaxRequest){
+define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest','jsx!/ui/util/stringtomoment'], function(_,moment,AjaxRequest,StringToMoment){
   class countsLoader{
     constructor(timeText='~',react){
       this.BAR_CNT_PER_ONE_PAGE = 60;
       this.reactInstance = react;
       this.currentTimeZone = moment.tz.guess();
+      /*
       this.dateTimes = _.map(timeText.split('~'),function(item){
-        return moment(item);
+        return moment(item.trim());
       });
+      */
+      let strtomoment = new StringToMoment(timeText);
+      this.dateTimes = strtomoment.parse();
 
       this.chartInterval = setChartInterval.bind(this)();
+      this.chartIntervalText = strtomoment.stringify(this.chartInterval);
 
       function setChartInterval() {
         if(this.dateTimes.length===2) {
@@ -76,9 +81,9 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,momen
           }
         };
 
-        return loadData('logstash-*/_field_stats?level=indices','POST',JSON.stringify(bodyField));
+        return loadData('baram-*/_field_stats?level=indices','POST',JSON.stringify(bodyField));
       }
-      function getIndices(resp){
+      function searchOnMultiIndex(resp){
         let indices = resp.indices;
         let bodyField = [
         {"index":[],"ignore_unavailable":true},
@@ -152,52 +157,72 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,momen
          - 해당 방법은 bluebird의 설정 중에 동시 요청 수를 제한하여 해결하기로 한다.
         */
         for(indexName in indices) {
-          let target = bodyField[0];
-          let options = bodyField[1];
-          target.index[0] = indexName;
+          if(_.isString(indexName) && indexName !== "") {
+            let target = bodyField[0];
+            let options = bodyField[1];
+            target.index[0] = indexName;
 
-          if(totalDataCnt < LIMIT) {
-            options.size = LIMIT;
-          }else{
-            target['search_type'] = 'count';
-            options.size = 0;
-          }
+            if(totalDataCnt < LIMIT) {
+              options.size = LIMIT;
+            }else{
+              target['search_type'] = 'count';
+              options.size = 0;
+            }
 
+            let p = loadData(
+              '_msearch?timeout=0&ignore_unavailable=true&preference=1459842496606',
+              'POST',
+              JSON.stringify(target)+'\n'+JSON.stringify(options)+'\n')
+            totalDataCnt += indices[indexName].fields['@timestamp'].doc_count;
 
-          let p = loadData(
-            '_msearch?timeout=0&ignore_unavailable=true&preference=1459842496606',
-            'POST',
-            JSON.stringify(target)+'\n'+JSON.stringify(options)+'\n')
-          totalDataCnt += indices[indexName].fields['@timestamp'].doc_count;
-
-          promises.push(p);
-
+            promises.push(p);
           // if(promises.length > REQ_LIMIT) {
           //   Promise.bind(this).all(promises).then(this.storeToContainer);
           // }
-
+          }
         }
-
-        return Promise.all(promises);
+        if(promises.length >0) {
+          return Promise.all(promises);
+        }else {
+          return Promise.reject("No indices");
+        }
       }
       function convertData(values) {
-        var rsult = _.reduce(values,function(result,item) {
-          if(_.isObjectLike(result.responses)) {
-            result = result.responses[0].aggregations[2].buckets;
-          }
-          return _.mergeWith(
-            result,
-            item.responses[0].aggregations[2].buckets,
-            function(objValue,srcValue) {
-              if(_.isObjectLike(objValue) && _.isObjectLike(srcValue)) {
-                if(objValue.key_as_string === srcValue.key_as_string) {
-                  return (objValue.doc_count > srcValue.doc_count)? objValue:srcValue;
+        let extractData = function(result,item) {
+            if(_.isObjectLike(result.responses)) {
+              result = result.responses[0].aggregations[2].buckets;
+            }
+            return _.mergeWith(
+              result,
+              item.responses[0].aggregations[2].buckets,
+              function(objValue,srcValue) {
+                if(_.isObjectLike(objValue) && _.isObjectLike(srcValue)) {
+                  if(objValue.key_as_string === srcValue.key_as_string) {
+                    return (objValue.doc_count > srcValue.doc_count)? objValue:srcValue;
+                  }
                 }
-              }
-              return srcValue;
-            });
-        });
-        return rsult;
+                return srcValue;
+              });
+          }
+        if(values.length>1) {
+          return {
+            interval:this.chartIntervalText,
+            data:_.reduce(values,extractData)
+          };
+        }else{
+          return {
+            interval:this.chartIntervalText,
+            data:extractData([],values[0])
+          };
+        }
+      }
+      function defaultData(value) {
+        if(value === "No indices") {
+          return {
+            interval:this.chartIntervalText,
+            data:[]
+          }
+        }
       }
       /*데이터를 부르기 전에 등록되었던 핸들러들을 모조리 실행한다.*/
       /*
@@ -227,8 +252,9 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest'], function(_,momen
       this.myPromise = Promise.resolve('OK')
         .bind(this)
         .then(getFieldStats)
-        .then(getIndices)
-        .then(convertData);
+        .then(searchOnMultiIndex)
+        .then(convertData)
+        .catch(defaultData);
     }
     getPromise() {
       return this.myPromise;

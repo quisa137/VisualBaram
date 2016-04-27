@@ -20,6 +20,8 @@ require.config({
     'text':'/modules/requirejs/text',
     'lodash':'/modules/lodash/lodash',
     'd3':'/modules/d3/d3.min',
+    'd3tip':'/modules/d3/d3-tip/index',
+
     'moment':'/modules/moment/moment-with-locales',
     'moment-timezone':'/modules/moment/moment-timezone-with-data.min',
     'bluebird':'/modules/bluebird/bluebird.core.min',
