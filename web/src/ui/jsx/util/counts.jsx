@@ -11,16 +11,19 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest','jsx!/ui/util/stri
       this.BAR_CNT_PER_ONE_PAGE = 60;
       this.reactInstance = react;
       this.currentTimeZone = moment.tz.guess();
-      /*
-      this.dateTimes = _.map(timeText.split('~'),function(item){
-        return moment(item.trim());
-      });
-      */
-      let strtomoment = new StringToMoment(timeText);
-      this.dateTimes = strtomoment.parse();
+      if(timeText.indexOf("now")> -1) {
+        let strtomoment = new StringToMoment(timeText);
+        this.dateTimes = strtomoment.parse();
 
-      this.chartInterval = setChartInterval.bind(this)();
-      this.chartIntervalText = strtomoment.stringify(this.chartInterval);
+        this.chartInterval = setChartInterval.bind(this)();
+        this.chartIntervalText = strtomoment.stringify(this.chartInterval);
+      }else{
+        this.dateTimes = _.map(timeText.split('~'),function(item){
+          return moment(item.trim());
+        });
+        this.chartIntervalText = this.chartInterval = setChartInterval.bind(this)();
+      }
+
 
       function setChartInterval() {
         if(this.dateTimes.length===2) {
@@ -81,70 +84,59 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest','jsx!/ui/util/stri
           }
         };
 
-        return loadData('baram-*/_field_stats?level=indices','POST',JSON.stringify(bodyField));
+        return loadData('baramtwit-*/_field_stats?level=indices','POST',JSON.stringify(bodyField));
       }
       function searchOnMultiIndex(resp){
         let indices = resp.indices;
         let bodyField = [
         {"index":[],"ignore_unavailable":true},
         {
-          "size":0,
-          "sort":[{
-            "@timestamp":{
-              "order":"desc",
-              "unmapped_type":"boolean"
+          "size": 0,
+          "sort": [
+            {
+              "@timestamp": {
+                "order": "desc",
+                "unmapped_type": "boolean"
+              }
             }
-          }],
-          "query":{
-            "filtered":{
-              "query":{
-                "query_string":{
-                  "analyze_wildcard":true,
-                  "query":"*"
-                }
-              },
-              "filter":{
-                "bool":{
-                  "must":[{
-                    "range":{
-                      "@timestamp":{
-                        "gte":parseInt(this.dateTimes[0].format('x')),
-                        "lte":parseInt(this.dateTimes[1].format('x')),
-                        "format":"epoch_millis"
+          ],
+          "query": {
+            "bool": {
+              "filter": {
+                "bool": {
+                  "must": [
+                    {
+                      "range": {
+                        "@timestamp": {
+                          "gte":parseInt(this.dateTimes[0].format('x')),
+                          "lte":parseInt(this.dateTimes[1].format('x')),
+                          "format": "epoch_millis"
+                        }
                       }
                     }
-                  }],
-                  "must_not":[]
+                  ],
+                  "must_not": []
                 }
               }
             }
           },
-          "highlight":{
-            "pre_tags":["@kibana-highlighted-field@"],
-            "post_tags":["@/kibana-highlighted-field@"],
-            "fields":{
-              "*":{}
-            },
-            "require_field_match":false,
-            "fragment_size":2147483647
-          },
-          "aggs":{
-            "2":{
-              "date_histogram":{
-                "field":"@timestamp",
+          "aggs": {
+            "dateGroup": {
+              "date_histogram": {
+                "field": "@timestamp",
                 "interval":this.chartInterval,
                 "time_zone":this.currentTimeZone,
-                "min_doc_count":0,
-                "extended_bounds":{
-                  "min":parseInt(this.dateTimes[0].format('x')),
-                  "max":parseInt(this.dateTimes[1].format('x'))
+                "min_doc_count": 0
+              },
+              "aggs": {
+                "cateGroup": {
+                  "terms": {
+                    "field": "CATEGORY"
+                  }
                 }
               }
             }
-          },
-          "fields":["*","_source"],
-          "script_fields":{},
-          "fielddata_fields":["@timestamp","received_at"]
+          }
         }];
 
         let LIMIT = 500,
@@ -170,7 +162,7 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest','jsx!/ui/util/stri
             }
 
             let p = loadData(
-              '_msearch?timeout=0&ignore_unavailable=true&preference=1459842496606',
+              '_msearch?timeout=0&ignore_unavailable=true&preference=' + (new Date()).getTime(),
               'POST',
               JSON.stringify(target)+'\n'+JSON.stringify(options)+'\n')
             totalDataCnt += indices[indexName].fields['@timestamp'].doc_count;
@@ -190,11 +182,11 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest','jsx!/ui/util/stri
       function convertData(values) {
         let extractData = function(result,item) {
             if(_.isObjectLike(result.responses)) {
-              result = result.responses[0].aggregations[2].buckets;
+              result = result.responses[0].aggregations["dateGroup"].buckets;
             }
             return _.mergeWith(
               result,
-              item.responses[0].aggregations[2].buckets,
+              item.responses[0].aggregations["dateGroup"].buckets,
               function(objValue,srcValue) {
                 if(_.isObjectLike(objValue) && _.isObjectLike(srcValue)) {
                   if(objValue.key_as_string === srcValue.key_as_string) {
@@ -204,7 +196,7 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest','jsx!/ui/util/stri
                 return srcValue;
               });
           }
-        if(values.length>1) {
+        if(values.length > 1) {
           return {
             interval:this.chartIntervalText,
             data:_.reduce(values,extractData)

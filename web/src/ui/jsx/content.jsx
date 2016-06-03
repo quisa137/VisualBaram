@@ -1,13 +1,13 @@
-define(['react','reactdom','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts','jsx!/ui/visualization/dateHistogram','jsx!/ui/etc/restclient'],
-  function(React,ReactDOM,Ajax,Counts,DateHistogram,RestClient) {
+define(['react','reactdom','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts','jsx!/ui/visualization/stackedBar','jsx!/ui/etc/restclient'],
+  function(React,ReactDOM,Ajax,Counts,StackedBar,RestClient) {
     class ContentModule extends React.Component {
       //생성자
       constructor(props) {
         super(props);
         this.state = {
           'grpData':{
-            'minDate':'now-2h',
-            'maxDate':'now',
+            'minDate':'2016-06-01 00:00:00',
+            'maxDate':'2016-06-01 23:59:59',
             'data':[]
           }
         };
@@ -15,7 +15,7 @@ define(['react','reactdom','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts','jsx
         this.getData();
       }
       componentDidMount() {
-        this.timer = setInterval(this.getData.bind(this), 10000);
+        //this.timer = setInterval(this.getData.bind(this), 10000);
         this.isMount = true;
       }
       getData() {
@@ -55,7 +55,8 @@ define(['react','reactdom','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts','jsx
               <li><span>Interval : </span>{this.state.grpData.interval}</li>
             </ul>
           </div>
-          <DateHistogram grpData={this.state.grpData}/>
+          <StackedBar grpData={this.state.grpData}/>
+          {/*<DateHistogram grpData={this.state.grpData}/>*/}
         </div>
         );
       }

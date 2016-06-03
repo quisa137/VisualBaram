@@ -1,13 +1,18 @@
 define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3tip) {
-  class DateHistogram extends React.Component {
+  /*
+  https://bl.ocks.org/mbostock/raw/3886208/
+  https://bl.ocks.org/mbostock/3885211
+  */
+  class StackedBar extends React.Component {
     constructor(props) {
       super(props);
       this.state = {grpData:[]};
+      this.legends = ["지반침하", "붕괴", "호우", "지진", "태풍일반", "화재", "감염병", "침수", "홍수"];
     }
     render() {
       return (
         <div {...this.props} >
-          <svg className="dateHistogram"></svg>
+          <svg className="stackedBar"></svg>
         </div>
       );
     }
@@ -17,6 +22,8 @@ define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3ti
       this.height = 300 - margin.top - margin.bottom;
       this.xRange = d3.scale.ordinal().rangeRoundBands([0, this.width], .1);
       this.yRange = d3.scale.linear().range([this.height,0]),
+      this.colors = d3.scale.ordinal().range(["#ce5621", "#527f84", "#8f7f43", "#f5a10b", "#c00000", "#274f47", "#2f2933","#cd0067","#e46c0b"]);
+
       this.xAxis = d3.svg.axis().scale(this.xRange).orient("bottom");
       this.yAxis = d3.svg.axis().scale(this.yRange).orient("left");
 
@@ -28,7 +35,7 @@ define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3ti
         });
       this.graphLength = 60;
 
-      this.chart = d3.select('.dateHistogram')
+      this.chart = d3.select('.stackedBar')
         .attr('width',this.width + margin.left + margin.right)
         .attr('height',this.height + margin.top + margin.bottom)
         .append("g")
@@ -49,13 +56,14 @@ define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3ti
       //this.setState({});
     }
     update() {
-      this.chart.selectAll('.x.axis,.y.axis,.bar').remove();
+      this.chart.selectAll('.x.axis,.y.axis,.time').remove();
       function xLabelFunc(d) {
         return moment(d.key).format('HH:mm');
       }
 
       let data = this.state.grpData;
       let dLength = this.graphLength;
+      this.colors.domain(this.legends);
       this.xRange.domain(data.map(function(d) {
         return xLabelFunc(d);
       }));
@@ -67,7 +75,8 @@ define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3ti
         height = this.height,
         chart = this.chart,
         xRange = this.xRange,
-        yRange = this.yRange;
+        yRange = this.yRange,
+        colors = this.colors;
 
       chart.append("g")
         .attr("class", "x axis")
@@ -84,41 +93,56 @@ define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3ti
         chart.append('p').html("minDate : "+this.state.minDate);
       }
 
-    function isHidden(i){
-      if(dLength > 25) {
-        if(i%Math.floor(dLength*0.1) === 0) {
-          return false;
-        }else{
-          return true;
+      function isHidden(i){
+        if(dLength > 25) {
+          if(i%Math.floor(dLength*0.1) === 0) {
+            return false;
+          }else{
+            return true;
+          }
         }
+        return true;
       }
-      return true;
-    }
-    chart.selectAll(".bar")
-      .data(data).enter()
-      .append("rect")
-      .attr("class", "bar")
-      .attr("x", function(d) {
-        return xRange(xLabelFunc(d))
-      })
-      .attr("y", function(d) { return yRange(d.doc_count); })
-      .attr("height", function(d) { return height - yRange(d.doc_count); })
-      .attr("width", xRange.rangeBand())
-    .on('mouseover',this.tip.show)
-    .on('mouseout',this.tip.hide);
+      var timeseries = chart.selectAll(".time")
+        .data(data).enter().append("g")
+        .attr("class","time")
+        .attr("tranform",function(d) {
+          return "translate(" + xRange(xLabelFunc(d)) + ",0)";
+        });
 
-      /*
-      .on('mouseover',function(e){
-        let bar = d3.select(this);
-        bar.attr('style','fill:purple');
-        tip.show(e);
-      })
-      .on('mouseout',function(e){
-        let bar = d3.select(this);
-        bar.attr('style','fill:steelblue');
-        tip.hide(e);
-      });
-      */
+      timeseries.selectAll("rect")
+        .data(function(d){ return d.cateGroup.buckets; })
+        .enter().append("rect")
+        .attr("width", xRange.rangeBand())
+        .attr("y", function(d) { return yRange(d.doc_count); })
+        .attr("height", function(d) { return height - yRange(d.doc_count); })
+        .style("fill",function(d) {return colors(d.key)})
+        .on('mouseover',this.tip.show)
+        .on('mouseout',this.tip.hide);
+        /*
+        .attr("x", function(d) {
+          return xRange(xLabelFunc(d))
+        })
+        var legend = svg.selectAll(".legend")
+          .data(color.domain().slice().reverse())
+        .enter().append("g")
+          .attr("class", "legend")
+          .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+      legend.append("rect")
+          .attr("x", width - 18)
+          .attr("width", 18)
+          .attr("height", 18)
+          .style("fill", color);
+
+      legend.append("text")
+          .attr("x", width - 24)
+          .attr("y", 9)
+          .attr("dy", ".35em")
+          .style("text-anchor", "end")
+          .text(function(d) { return d; });
+        */
+
       let xAsixTicks = chart.selectAll('.x.axis .tick');
 
       xAsixTicks.select('line').attr('style',function(d,i,j){
@@ -127,33 +151,10 @@ define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3ti
       xAsixTicks.select('text').attr('style',function(d,i,j){
         return (isHidden(i))?'opacity:0':'opacity:1;fill:red';
       });
-      /*
-      let barWidth = this.width / data.length;
-      let h = this.height;
-      let yRange = this.yRange;
-
-      let bar = this.chart.selectAll("g")
-        .data(data)
-        .enter().append("g")
-          .attr("transform", function(d, i) {
-            return "translate(" + i * barWidth + ",0)";
-          });
-
-      bar.append("rect")
-        .attr("y", function(d) { return range(d.doc_count); })
-        .attr("height", function(d) { return h - range(d.doc_count); })
-        .attr("width", barWidth - 1);
-
-      bar.append("text")
-        .attr("x", barWidth / 2)
-        .attr("y", function(d) { return range(d.doc_count) + 3; })
-        .attr("dy", ".75em")
-        .text(function(d) { return d.doc_count; });
-      */
     }
   }
-  DateHistogram.propTypes = {
+  StackedBar.propTypes = {
     grpData : React.PropTypes.object
   };
-  return DateHistogram;
+  return StackedBar;
 });
