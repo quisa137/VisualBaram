@@ -1,6 +1,12 @@
-{
-  "elasticsearch":{
-    "dest":"211.180.114.226:9200",
-    "ssl":false
+[
+  {
+    "port":8080,
+    "basePath":"web",
+    "classesFolder":["build"]
+  },
+  {
+  	"port":8081,
+  	"basePath":"webapps/baram.war",
+  	"classesFolder":[]
   }
-}
+]

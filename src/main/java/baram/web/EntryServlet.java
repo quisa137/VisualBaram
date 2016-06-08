@@ -85,7 +85,7 @@ public class EntryServlet  extends HttpServlet {
             //생성자에 모듈 이름을 뺀 나머지 경로 넣기
             Class[] paramTypes = {String.class};
             Object[] args = {exceptURI};
-            logicClass.getConstructor(paramTypes).newInstance(args).process(req, resp,config.getConfigObject(logicName));
+            logicClass.getConstructor(paramTypes).newInstance(args).process(req, resp,config.getConfigObject("web",logicName.toLowerCase()));
         } catch (ClassNotFoundException | NoSuchMethodException | 
                 SecurityException | InstantiationException | 
                 IllegalAccessException | IllegalArgumentException | 

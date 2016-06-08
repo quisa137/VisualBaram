@@ -1,0 +1,6 @@
+{
+  "elasticsearch":{
+    "dest":"211.180.114.226:9200",
+    "ssl":false
+  }
+}

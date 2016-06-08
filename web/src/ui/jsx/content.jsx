@@ -6,8 +6,8 @@ define(['react','reactdom','jsx!/ui/util/ajaxRequest','jsx!/ui/util/counts','jsx
         super(props);
         this.state = {
           'grpData':{
-            'minDate':'2016-06-01 00:00:00',
-            'maxDate':'2016-06-01 23:59:59',
+            'minDate':'2016-06-08 21:00:00',
+            'maxDate':'2016-06-08 23:59:59',
             'data':[]
           }
         };

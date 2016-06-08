@@ -1,12 +1,26 @@
 package baram.web;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.Scanner;
 
+import org.apache.catalina.Host;
 import org.apache.catalina.WebResourceRoot;
+import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.StandardContext;
+import org.apache.catalina.core.StandardEngine;
+import org.apache.catalina.core.StandardHost;
+import org.apache.catalina.startup.ContextConfig;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Baram 톰캣 로딩 하는 역할을 한다. 
@@ -22,48 +36,76 @@ import org.apache.catalina.webresources.StandardRoot;
  *
  */
 public class WebServerLauncher {
-	public static void main(String[] args) throws Exception {
+    
+    public static void main(String[] args) throws Exception {
+        Enumeration e = NetworkInterface.getNetworkInterfaces();
+        while(e.hasMoreElements())
+        {
+            NetworkInterface n = (NetworkInterface) e.nextElement();
+            Enumeration ee = n.getInetAddresses();
+            while (ee.hasMoreElements())
+            {
+                InetAddress i = (InetAddress) ee.nextElement();
+                System.out.println(i.getHostAddress());
+            }
+        }
+        
 		// TODO Auto-generated method stub
 		String webappDirLocation = "web";
-        String webPort = System.getenv("PORT");
-        if(webPort == null || webPort.isEmpty()) {
-            webPort = "8080";
-        }
-        //Baram Visualization
-        Tomcat tomcat = new Tomcat();
-        //포트 지정
-        tomcat.setPort(Integer.valueOf(webPort));
-        //톰캣 임시 폴더
-        tomcat.setBaseDir("web/WEB-INF/");
-        
-        //Context 생성(설정을 담는 그릇 같은 거)
-        StandardContext ctx = (StandardContext) tomcat.addWebapp("", new File(webappDirLocation).getAbsolutePath());
-        
-        //Servlet 설정 어노테이션으로 하는 방법도 있으나 실행 시점이 불명확함
-        Tomcat.addServlet(ctx,"EntryServlet",new EntryServlet());
-//        ctx.addServletMapping("/api/*", "EntryServlet");
-        ctx.addServletMapping("/*", "EntryServlet");
-
-        // Declare an alternative location for your "WEB-INF/classes" dir
-        // Servlet 3.0 annotation will work
-        File additionWebInfClasses = new File("build").getAbsoluteFile();
-        WebResourceRoot resources = new StandardRoot(ctx);
-        DirResourceSet dirSet = new DirResourceSet(resources, "/WEB-INF/classes", additionWebInfClasses.getAbsolutePath(), "/");
-        resources.addPreResources(dirSet);
-        
-        ctx.setResources(resources);
-        
-        tomcat.start();
-        tomcat.getServer().await();
-        
-        //Sematic Docs 해당 프로젝트와는 별도로 구축 개발용 임
-        /*
-        Tomcat tomcat2 = new Tomcat();
-        tomcat2.setPort(8081);
-        tomcat2.setBaseDir("web/WEB-INF/");
-        tomcat2.addWebapp("", new File("../SematicDocs").getAbsolutePath());
-        tomcat2.start();
-        tomcat2.getServer().await();
-        */
+		Config c = Config.getInstance();
+		JSONArray configs = c.getConfigArray("config");
+		Iterator itConfigs = configs.iterator();
+		
+		while(itConfigs.hasNext()) {
+		    JSONObject obj = (JSONObject)itConfigs.next();
+		    String baseFolder = obj.getString("basePath");
+		    File docBase = new File(baseFolder.split("/")[0]);
+		    JSONArray classesFolders = obj.getJSONArray("classesFolder");
+		  //Baram Visualization
+	        Tomcat tomcat = new Tomcat();
+	        //포트 지정
+	        tomcat.setPort(obj.getInt("port"));
+            tomcat.getConnector().setURIEncoding("UTF-8");
+	        
+	        StandardHost host = (StandardHost)tomcat.getHost();
+	        //host.setName(InetAddress.getByName("eno16777736").getHostAddress());
+	        host.setAutoDeploy(true);
+	        host.setUnpackWARs(true);
+	        
+	        if(baseFolder.startsWith("webapps")){
+	            host.setAppBase(docBase.getAbsolutePath());
+	        }else{
+	            //톰캣 임시 폴더
+	            tomcat.setBaseDir(baseFolder);
+	        }
+            //Context 생성(설정을 담는 그릇 같은 거)
+            StandardContext ctx = (StandardContext) tomcat.addWebapp(host,"", new File(baseFolder).getAbsolutePath());
+            ctx.setCrossContext(true);
+            ctx.setReloadable(true);
+	        
+	        //Servlet 설정 어노테이션으로 하는 방법도 있으나 실행 시점이 불명확함
+	        /*
+	        Tomcat.addServlet(ctx,"EntryServlet",new EntryServlet());
+	        ctx.addServletMapping("/api/*", "EntryServlet");
+	        ctx.addServletMapping("/*", "EntryServlet");
+	        */
+	        // Declare an alternative location for your "WEB-INF/classes" dir
+	        // Servlet 3.0 annotation will work
+	        Iterator itClassesFolders = classesFolders.iterator();
+            
+	        WebResourceRoot resources = new StandardRoot(ctx);
+            
+	        while(itClassesFolders.hasNext()) {
+	            String classesFolder = (String) itClassesFolders.next();
+	            File additionWebInfClasses = new File(classesFolder).getAbsoluteFile();
+	            resources.addPreResources(new DirResourceSet(resources, "/WEB-INF/classes", additionWebInfClasses.getAbsolutePath(), "/"));
+	        }
+	        ctx.setResources(resources);
+	        tomcat.start();
+	        
+	        if(!itConfigs.hasNext()) {
+	            tomcat.getServer().await();
+	        }
+		}
 	}
 }
