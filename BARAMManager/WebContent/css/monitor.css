@@ -1,0 +1,83 @@
+.comm_tab1 > .tab_cont{
+  width:837px;
+}
+.timelbl .timeField {
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
+}
+.timelbl .timeTxt {
+  line-height:40px;
+}
+.monitoring,.syslog {
+  margin-top: 20px;
+}
+.monitoring td.lbl {
+  text-align: right;
+  min-width: 90px;
+
+}
+.monitoring td.values {
+  min-width: 120px;
+  max-width: 120px;
+  overflow: hidden;
+}
+.stat{
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 40px;
+  min-width: 70px;
+}
+.stat_detail {
+  line-height: 20px;
+  font-size: 11px;
+}
+.axis text {
+  font-size: 8px;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.x.axis path {
+  display: none;
+}
+#cpuChart .line {
+  /*fill: rgba(70,130,180,0.2);*/
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+#memChart .line {
+  /*fill: rgba(147,37,179,0.2);*/
+  fill:none;
+  stroke: #9325b3;
+  stroke-width: 1.5px;
+}
+#diskChart .line {
+  /*fill: rgba(77,166,12,0.2);*/
+  fill:none;
+  stroke: #4da60c;
+  stroke-width: 1.5px;
+}
+.btn{
+  float: none;
+  width: 54px;
+  height: 34px;
+  font-family: inherit;
+  margin-left: 0;
+}
+@media (min-width: 768px){
+  .form-control.inverse {
+    color: white;
+    background-color: black;
+  }
+  .form-control.logPath {
+    width: 500px;
+  }
+  .form-control.lineLength{
+    width: 50px;
+  }
+}

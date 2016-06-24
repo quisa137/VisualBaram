@@ -1,0 +1,744 @@
+body {
+	font: 12px/26px Open Sans, sans-serif;
+	width: 100%;
+}
+
+/* header */
+.Header {
+	background-color: #2a72ad;
+	height: 50px;
+	position: fixed;
+	width: 100%;
+	z-index: 999998;
+}
+
+.logo {
+	float: left;
+	height: 50px;
+	width: 114px;
+}
+
+.logo img {
+	display: block;
+	float: left;
+	height: 50px;
+	width: 114px;
+}
+
+.gnbWrap {
+	color: #fff;
+	float: right;
+	font: 10px/12px Open Sans, sans-serif;
+	height: 50px;
+	min-width: 330px;
+}
+
+.gnbBar {
+	background-color: #2a72ad;
+	display: block;
+	float: left;
+	height: 46px;
+	margin: 2px 1px 0;
+	width: 1px;
+}
+
+.gnb {
+	background-color: #2d73ad;
+	cursor: pointer;
+	float: left;
+	height: 46px;
+	margin-top: 2px;
+	position: relative;
+	min-width: 95px;
+}
+
+.gnbImg {
+	display: block;
+	float: left;
+	height: 22px;
+	margin-top: 12px;
+	width: 22px;
+	margin-right: 8px;
+}
+
+.gnbText {
+	display: block;
+	float: left;
+	font: bold 14px/14px Open Sans, sans-serif;
+	height: 14px;
+	margin-top: 16px;
+	width: 84px;
+}
+
+.gnbTextShortNotice {
+	display: block;
+	float: left;
+	font: bold 14px/14px Open Sans, sans-serif;
+	height: 14px;
+	margin-top: 16px;
+	width: 50px;
+}
+
+.gnbTextShortHelp {
+	display: block;
+	float: left;
+	font: bold 14px/14px Open Sans, sans-serif;
+	height: 14px;
+	margin-top: 16px;
+	width: 38px;
+}
+
+.gnbTextShortUser {
+	display: block;
+	float: left;
+	font: bold 14px/14px Open Sans, sans-serif;
+	height: 14px;
+	margin-top: 16px;
+	width: 45px;
+}
+
+.gnbClickImg {
+	display: block;
+	float: left;
+	height: 9px;
+	margin-top: 18px;
+	width: 12px;
+	margin-right: 15px;
+}
+
+/* gnb notice click */
+.NoticeClickSub {
+	color: #fff;
+	cursor: pointer;
+	display: none;
+	height: 600px;
+	position: absolute;
+	width: 380px;
+}
+
+.NoticeClickSubTop {
+	height: 50px;
+	width: 145px;
+}
+
+.NoticeClickSubBottom {
+	background-color: #3376ad;
+	border-bottom: 1px solid #4884b6;
+	height: 183px;
+	width: 380px;
+}
+
+.NoticeClickSubBottom:hover {
+	background-color: #4884b6;
+}
+
+/* gnb Help click */
+.HelpClickSub {
+	position: absolute;
+	color: #fff;
+	cursor: pointer;
+	display: none;
+	height: 363px;
+	width: 111px;
+	margin-left: 220px;
+}
+
+.HelpClickSubTop {
+	height: 50px;
+	width: 109px;
+}
+
+.HelpClickSubDd {
+	background-color: #3376ad;
+	border-bottom: 1px solid #4884b6;
+	height: 38px;
+	width: 111px;
+}
+
+.HelpClickSubDd:hover {
+	background-color: #4884b6;
+}
+
+.HelpClickSubDd a {
+	display: block;
+	float: left;
+	font: 11px/38px Open Sans, sans-serif;
+	height: 38px;
+	margin-left: 7px;
+	width: 104px;
+}
+
+/* gnb User click */
+.UserClickSub {
+	color: #fff;
+	cursor: pointer;
+	display: none;
+	height: 129px;
+	margin-left: 340px;
+	position: absolute;
+	width: 119px;
+}
+
+.UserClickSubTop {
+	height: 50px;
+	width: 119px;
+}
+
+.UserClickSubDd {
+	background-color: #3376ad;
+	border-bottom: 1px solid #4884b6;
+	height: 38px;
+	width: 119px;
+}
+
+.UserClickSubDd:hover {
+	background-color: #4884b6;
+}
+
+.UserClickSubDd a {
+	color: #fff;
+	display: block;
+	float: left;
+	font: 11px/38px Open Sans, sans-serif;
+	height: 38px;
+	text-decoration: none;
+	width: 70px;
+	padding-left: 15px;
+}
+
+/* gnb feedBack, contents btn click */
+.popupWrap {
+	display: none;
+	min-height: 915px;
+	position: relative;
+	width: 100%;
+	z-index: 999999;
+}
+
+.popupbg {
+	background-color: #000000;
+	cursor: pointer;
+	min-height: 965px;
+	opacity: 0.7;
+	position: absolute;
+	width: 100%;
+}
+
+.popup {
+	background-color: #fff;
+	height: 300px;
+	margin-left: 25%;
+	margin-top: 50px;
+	opacity: 1;
+	position: absolute;
+	width: 50%;
+}
+
+/* header nscreen */
+@media screen and (max-width: 561px) {
+	.gnbWrap {
+		min-width: 132px;
+	}
+	.gnb {
+		min-width: 30px
+	}
+	.gnbText {
+		display: none;
+	}
+	.gnbClickImg {
+		display: none;
+	}
+	.NoticeClickSub {
+		width: 132px;
+	}
+	.NoticeClickSubTop {
+		width: 132px;
+	}
+	.HelpClickSub {
+		width: 132px;
+	}
+	.HelpClickSubTop {
+		width: 132px;
+	}
+	.UserClickSub {
+		width: 132px;
+		margin-left: 55px;
+	}
+	.UserClickSubTop {
+		width: 132px;
+	}
+}
+
+/* header End */
+
+/* Container */
+.Container {
+	float: left;
+	margin-top: 50px;
+	min-height: 915px;
+	width: 100%;
+}
+
+/* sideBar */
+.SideBar {
+	border-right: 1px solid #d9d9d9;
+	float: left;
+	min-height: 915px;
+	position: fixed;
+	width: 62px;
+}
+
+.sideNav {
+	float: left;
+	min-height: 430px;
+	margin-top: 30px;
+	width: 62px;
+	border-top: 1px solid #cacfcf;
+}
+
+.sideBtnWrap {
+	margin-top: 1px;
+	float: left;
+	height: 52px;
+	position: relative;
+	width: 62px;
+	border-bottom: 1px solid #cacfcf;
+}
+
+.sideBtnViewWrap {
+	float: left;
+	height: 51px;
+	margin-bottom: 1px;
+	margin-left: 1px;
+	position: absolute;
+	width: 60px;
+}
+
+.sideClickAction {
+	background-color: #e68501;
+	border-right: 1px solid #fff;
+	float: left;
+	height: 51px;
+	margin-left: 1px;
+	position: absolute;
+	width: 2px;
+}
+
+.sideNoClickAction {
+	background-color: #fff;
+	border-right: 1px solid #fff;
+	float: left;
+	height: 51px;
+	margin-left: 1px;
+	position: absolute;
+	width: 2px;
+}
+
+.sideNoClickActionA {
+	display: block;
+	float: left;
+	height: 20px;
+	margin-left: 1px;
+	position: absolute;
+	width: 56px;
+}
+
+.sideNavIcon {
+	display: block;
+	float: left;
+	height: 41px;
+	position: absolute;
+	width: 47px;
+	margin-left: 8px;
+	margin-top: 5px;
+}
+
+.sideNavIHoverWrap {
+	display: none;
+	float: left;
+	height: 43px;
+	margin-left: 70px;
+	margin-top: 9px;
+	position: relative;
+	width: 106px;
+}
+
+.sideNavHoverImg {
+	display: block;
+	float: left;
+	height: 33px;
+	position: absolute;
+	width: 200px;
+	z-index: 99999999;
+}
+
+.sideNavHoverText {
+	color: #fff;
+	display: block;
+	float: left;
+	font: bold 12px/33px Open Sans, sans-serif;
+	height: 33px;
+	margin-left: 25px;
+	position: absolute;
+	width: 86px;
+	z-index: 100000000;
+}
+
+.sideBtnWrap:hover .sideNavIHoverWrap {
+	display: block;
+}
+
+/* chart */
+.Contents {
+	margin-left: 80px;
+	float: left;
+	min-height: 915px;
+	width: 95%;
+}
+
+.ContentsTop {
+	float: left;
+	height: 52px;
+	margin-top: 30px;
+	width: 98%;
+}
+
+.ContentsTitle {
+	color: #6c6c6c;
+	display: block;
+	float: left;
+	font: 26px/42px sans-serif;
+	height: 52px;
+	width: 50%;
+}
+
+.popupBtn {
+	background-color: #2a72ad;
+	border-radius: 3px;
+	color: #fff;
+	display: block;
+	float: right;
+	font: 12px/31px sans-serif;
+	height: 31px;
+	margin-top: 11px;
+	text-align: center;
+	width: 187px;
+	cursor: pointer;
+}
+
+.ContentsBottom {
+	float: left;
+	min-height: 800px;
+	width: 99%;
+}
+
+.ContentsBottomTop {
+	border-bottom: 1px solid #bac2c3;
+	border-top: 1px solid #bac2c3;
+	float: left;
+	min-height: 41px;
+	width: 99%;
+}
+
+.ContentsBottomBottom {
+	float: left;
+	min-height: 104px;
+	width: 100%;
+}
+
+.settingsWrap {
+	float: left;
+	border-top: 1px solid #bac2c3;
+	border-bottom: 1px solid #bac2c3;
+	font: 12px/26px Open Sans, sans-serif;
+	min-height: 30px;
+	width: 97%;
+	padding-left: 55px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.selectBoxWrap {
+	float: left;
+	min-height: 32px;
+	margin-right: 11px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+.settingsText {
+	float: left;
+	display: block;
+	min-height: 26px;
+	text-align: center;
+	min-width: 75px;
+	font: 12px/32px Open Sans, sans-serif;
+	min-width: 80px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+.bracketText {
+	float: left;
+	display: block;
+	min-height: 32px;
+	text-align: center;
+	min-width: 75px;
+	font: 12px/32px Open Sans, sans-serif;
+	min-width: 25px;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+.settingsTextStyle_red {
+	color: red;
+	font-size: 14px;
+}
+
+/* settings Box Select Box width */
+.selectBoxStyle_280 {
+	width: 280px;
+}
+
+.selectBoxStyle_200 {
+	width: 200px;
+}
+
+.selectBoxStyle_160 {
+	width: 160px;
+}
+
+.selectBoxStyle_140 {
+	width: 140px;
+}
+
+.selectBoxStyle_90 {
+	width: 90px;
+}
+
+.TimeInputWrap {
+	float: left;
+	min-height: 24px;
+	min-width: 35%;
+}
+
+.StartTimeWrap {
+	float: left;
+	min-height: 24px;
+	min-width: 54%;
+}
+
+.StartTimeTitle {
+	display: block;
+	float: left;
+	font: 12px/30px Open Sans, sans-serif;
+	min-height: 24px;
+	margin-right: 15px;
+	min-width: 10px;
+}
+
+.EndTimeWrap {
+	float: left;
+	min-height: 24px;
+	min-width: 46%;
+}
+
+.EndTimeTitle {
+	display: block;
+	float: left;
+	font: 12px/30px Open Sans, sans-serif;
+	min-height: 24px;
+	margin-right: 15px;
+	min-width: 10px;
+}
+
+.InputBoxStyle {
+	width: 115px;
+	height: 26px;
+	vertical-align: top;
+	border-radius: 2px;
+	border: 1px solid #a4a4a4;
+	padding-left: 5px;
+}
+
+.btnWrap {
+	float: right;
+	margin-right: 60px;
+}
+
+.btnWrap button {
+	margin-top: 8px;
+	margin-bottom: 8px;
+	background-color: #2a72ad;
+	border: 0;
+	width: 70px;
+}
+
+/* margin value  */
+.margin_top_8 {
+	margin-top: 8px;
+}
+
+.margin_bottom_0 {
+	margin-bottom: 0;
+}
+
+.monitorSettingsBtnWrap {
+	float: left;
+	min-height: 24px;
+	width: 26px;
+}
+
+.monitorSettingsBtn {
+	cursor: pointer;
+	display: block;
+	height: 20px;
+	width: 20px;
+}
+
+.monitorSettingsBtn input {
+	height: 16px;
+	margin-top: 4px;
+	width: 16px;
+}
+
+.monitorRowWrapStyle {
+	border-bottom: 1px solid #bac2c3;
+}
+
+.monitorChartWrapStyle {
+	color: #6d6d73;
+	float: left;
+	font: 13px/40px Open Sans, sans-serif;
+}
+
+.monitorChartTitleImg {
+	display: block;
+	float: left;
+	height: 16px;
+	margin-right: 5px;
+	margin-top: 12px;
+	width: 16px;
+	margin-left: 30px;
+}
+
+.monitorBubbleChartImgStyle {
+	margin-left: 30px;
+}
+
+.monitorChartTitle {
+	color: #000;
+	float: left;
+	font: 14px/40px Open Sans, sans-serif;
+	margin-left: 10px;
+	min-width: 80%;
+}
+
+.monitorChartStyle {
+	margin-left: 30px;
+}
+
+.memberSettingsWrap {
+	float: left;
+	border-top: 1px solid #bac2c3;
+	font: 12px/26px Open Sans, sans-serif;
+	min-height: 30px;
+	width: 100%;
+	padding-bottom: 15px;
+}
+
+.userAddWrapBox {
+	float: right;
+	margin-top: 15px;
+	margin-right: 3%;
+}
+
+.userAddWrapBox input {
+	float: left;
+	width: 250px;
+	height: 20px;
+	padding: 5px;
+}
+
+.userAddWrapBox a {
+	width: 120px;
+	font: 12px/24px Open Sans, sans-serif;
+	float: left;
+	diasply: block;
+	height: 24px;
+	background-color: #2a72ad;
+	cursor: pointer;
+	color: #fff;
+	padding: 5px 25px;
+	border-radius: 0 3px 3px 0;
+	text-align: center;
+}
+
+.userAddWrapBox a:hover {
+	font: bold 12px/24px Open Sans, sans-serif;
+}
+
+.memberListTitle {
+	float: left;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #fff;
+	font: bold 13px/15px Open Sans, sans-serif;
+	min-height: 15px;
+	width: 94%;
+	margin-left: 55px;
+	margin-right: 55px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	text-align: center;
+	background-color: #428fd5;
+	color: #fff;
+	padding-top: 10px;
+}
+
+.memberListTitle li {
+	float: left;
+}
+
+.memberList {
+	float: left;
+	border-top: 1px solid #fff;
+	border-bottom: 1px solid #bac2c3;
+	font: 12/30px Open Sans, sans-serif;
+	min-height: 30px;
+	width: 94%;
+	margin-left: 55px;
+	margin-right: 55px;
+	text-align: center;
+}
+
+.memberList li {
+	float: left;
+}
+
+.memberId {
+	width: 16%;
+}
+
+.memberName {
+	width: 16%;
+}
+
+.memberMail {
+	width: 16%;
+}
+
+.memberMail {
+	width: 16%;
+}
+
+.memberGroupEvel {
+	width: 16%;
+}
+
+.memberModi {
+	width: 16%;
+}
+
+.memberDelet {
+	width: 16%;
+}

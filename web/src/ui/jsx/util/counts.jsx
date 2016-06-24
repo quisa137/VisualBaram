@@ -27,7 +27,6 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest','jsx!/ui/util/stri
 
       function setChartInterval() {
         if(this.dateTimes.length===2) {
-          this.dateTimes[1].diff(this.dateTimes[0]);
           let timeDiff = this.dateTimes[1].diff(this.dateTimes[0]),
             BAR_CNT_PER_ONE_PAGE = 60,
             interval = Math.round(timeDiff/BAR_CNT_PER_ONE_PAGE),
@@ -126,7 +125,11 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest','jsx!/ui/util/stri
                 "field": "@timestamp",
                 "interval":this.chartInterval,
                 "time_zone":this.currentTimeZone,
-                "min_doc_count": 0
+                "min_doc_count": 0,
+                "extended_bounds":{
+                  "min":parseInt(this.dateTimes[0].format('x')),
+                  "max":parseInt(this.dateTimes[1].format('x'))
+                }
               },
               "aggs": {
                 "cateGroup": {
@@ -136,7 +139,10 @@ define(['lodash','moment-timezone','jsx!/ui/util/ajaxRequest','jsx!/ui/util/stri
                 }
               }
             }
-          }
+          },
+          "fields":["*","_source"],
+          "script_fields":{},
+          "fielddata_fields":["@timestamp","received_at"]
         }];
 
         let LIMIT = 500,

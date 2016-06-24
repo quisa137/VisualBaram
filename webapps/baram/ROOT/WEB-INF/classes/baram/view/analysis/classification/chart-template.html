@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Charting Frame</title>
+<link rel="stylesheet" type="text/css" href="css/dc.css" />
+</head>
+<body>
+
+<div id="scatter"></div>
+	
+<script type="text/javascript" src="js/d3.js"></script>
+<script type="text/javascript" src="js/crossfilter.js"></script>
+<script type="text/javascript" src="js/dc.js"></script>
+<script type="text/javascript">
+	
+var chart = dc.scatterPlot("#scatter");
+
+var chartWidth = Math.round(window.innerWidth);
+var chartHeight = Math.round(window.innerHeight);
+
+d3.csv('##dataUrl##', function(error, data) {
+	data.forEach(function(x) {
+	    x.v1 = +x.v1;
+	    x.v2 = +x.v2;
+	});
+	
+	var crf = crossfilter(data);
+	var dim = crf.dimension(function(d) {return [+d.v1, +d.v2]; });
+	
+	var grp = dim.group().reduce(function(p, v) {
+		p.v1 = v.v1;
+		p.v2 = v.v2;
+		return p;
+	}, function(p, v) {
+		p.v1 = v.v1;
+		p.v2 = v.v2;
+		return p;
+	}, function() {
+		return {
+			v1 : 0,
+			v2 : 0
+		};
+	}).order(function orderValue(p) { return p.v1; });
+	var topValue = grp.top(1);
+	chart
+	    .width(chartWidth)
+	    .height(chartHeight)
+	    .x(d3.scale.linear().domain([0,topValue[0].value.v1]))
+	    .brushOn(false)
+	    .symbolSize(8)
+	    .clipPadding(10)
+	    .xAxisLabel("##V1##")
+	    .yAxisLabel("##V2##")
+	    .dimension(dim)
+	    .group(grp);
+
+	  chart.render();
+});
+</script>
+
+</body>
+</html>
+
+

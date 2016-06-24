@@ -3,6 +3,7 @@
 	<name>VisualBaram</name>
 	<comment>Project gBaram created by Buildship.</comment>
 	<projects>
+		<project>BARAMManager</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -5,8 +5,13 @@
     "classesFolder":["build"]
   },
   {
-  	"port":8081,
-  	"basePath":"webapps/baram.war",
-  	"classesFolder":[]
+    "port":8081,
+    "basePath":"webapps/baram/WebContent",
+    "classesFolder":["webapps/baram/build/classes"]
+  },
+  {
+     "port":8082,
+     "basePath":"BARAMManager/WebContent",
+     "classesFolder":["BARAMManager/build/classes"]
   }
 ]

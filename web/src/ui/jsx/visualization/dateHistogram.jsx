@@ -51,7 +51,7 @@ define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3ti
     update() {
       this.chart.selectAll('.x.axis,.y.axis,.bar').remove();
       function xLabelFunc(d) {
-        return moment(d.key).format('HH:mm');
+        return moment(d.key).format('HH:mm:ss');
       }
 
       let data = this.state.grpData;

@@ -14,27 +14,20 @@ define(['react'],
                 <i className="arrow right icon"></i>
                 Baram Home
               </a>
-              <a href="#" className="item">Monitoring</a>
+              <a href="http://localhost:8081/Monitoring" className="item">Monitoring</a>
               <div className="ui simple dropdown item">
                 Visualization <i className="dropdown icon"></i>
                 <div className="menu">
-                  <a className="item" href="#">Link Item</a>
-                  <a className="item" href="#">Link Item</a>
-                  <div className="divider"></div>
-                  <div className="header">Header Item</div>
-                  <div className="item">
-                    <i className="dropdown icon"></i>
-                    Sub Menu
-                    <div className="menu">
-                      <a className="item" href="#">Link Item</a>
-                      <a className="item" href="#">Link Item</a>
-                    </div>
-                  </div>
-                  <a className="item" href="#">Link Item</a>
+                  <a className="item" href="http://localhost:8081/Streaming" target="_self">Streaming</a>
+                  <a className="item" href="http://localhost:8081/Interest" target="_self">Bar</a>
+                  <a className="item" href="http://localhost:8081/Advertising" target="_self">Line</a>
+                  <a className="item" href="http://localhost:8081/InstallEnv" target="_self">Circle1</a>
+                  <a className="item" href="http://localhost:8081/FirstImpression" target="_self">Circle2</a>
+                  <a className="item" href="http://localhost:8081/Population" target="_self">Heatmap</a>
+                  <a className="item" href="http://localhost:8081/Economy" target="_self">Range</a>
+                  <a className="item" href="http://localhost:8081/Network" target="_self">Network</a>
                 </div>
               </div>
-              <a href="#" className="item">Dashboard</a>
-              <a href="#" className="item">Search</a>
             </div>
           </div>
         );

@@ -1,21 +1,10 @@
 package baram.web;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.Scanner;
-
-import org.apache.catalina.Host;
 import org.apache.catalina.WebResourceRoot;
-import org.apache.catalina.connector.Connector;
 import org.apache.catalina.core.StandardContext;
-import org.apache.catalina.core.StandardEngine;
 import org.apache.catalina.core.StandardHost;
-import org.apache.catalina.startup.ContextConfig;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.catalina.webresources.DirResourceSet;
 import org.apache.catalina.webresources.StandardRoot;
@@ -38,28 +27,20 @@ import org.json.JSONObject;
 public class WebServerLauncher {
     
     public static void main(String[] args) throws Exception {
-        Enumeration e = NetworkInterface.getNetworkInterfaces();
-        while(e.hasMoreElements())
-        {
-            NetworkInterface n = (NetworkInterface) e.nextElement();
-            Enumeration ee = n.getInetAddresses();
-            while (ee.hasMoreElements())
-            {
-                InetAddress i = (InetAddress) ee.nextElement();
-                System.out.println(i.getHostAddress());
-            }
-        }
-        
 		// TODO Auto-generated method stub
-		String webappDirLocation = "web";
 		Config c = Config.getInstance();
 		JSONArray configs = c.getConfigArray("config");
-		Iterator itConfigs = configs.iterator();
+		Iterator<Object> itConfigs = configs.iterator();
 		
 		while(itConfigs.hasNext()) {
 		    JSONObject obj = (JSONObject)itConfigs.next();
 		    String baseFolder = obj.getString("basePath");
-		    File docBase = new File(baseFolder.split("/")[0]);
+		    File docBase = null;
+		    if(baseFolder.indexOf("/") >  -1) {
+		        docBase = new File(baseFolder.substring(0, baseFolder.lastIndexOf("/")));
+		    }else{
+		        docBase = new File(baseFolder);
+		    }
 		    JSONArray classesFolders = obj.getJSONArray("classesFolder");
 		  //Baram Visualization
 	        Tomcat tomcat = new Tomcat();
@@ -68,7 +49,6 @@ public class WebServerLauncher {
             tomcat.getConnector().setURIEncoding("UTF-8");
 	        
 	        StandardHost host = (StandardHost)tomcat.getHost();
-	        //host.setName(InetAddress.getByName("eno16777736").getHostAddress());
 	        host.setAutoDeploy(true);
 	        host.setUnpackWARs(true);
 	        
@@ -91,7 +71,7 @@ public class WebServerLauncher {
 	        */
 	        // Declare an alternative location for your "WEB-INF/classes" dir
 	        // Servlet 3.0 annotation will work
-	        Iterator itClassesFolders = classesFolders.iterator();
+	        Iterator<Object> itClassesFolders = classesFolders.iterator();
             
 	        WebResourceRoot resources = new StandardRoot(ctx);
             

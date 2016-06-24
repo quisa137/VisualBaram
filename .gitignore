@@ -1,3 +1,12 @@
+.settings
+.project
+.classpath
 /build/
 webapps/ROOT/
 tomcat.8080/*
+/bin/
+*.class
+*/build/
+*/.settings/
+*/.project
+*/.classpath

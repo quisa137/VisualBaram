@@ -58,9 +58,6 @@ define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3ti
     }
     update() {
       this.chart.selectAll('.x.axis,.y.axis,.time').remove();
-      function xLabelFunc(d) {
-        return moment(d.key).format('HH:mm');
-      }
       let width = this.width,
         height = this.height,
         chart = this.chart,
@@ -69,6 +66,20 @@ define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3ti
         colors = this.colors;
 
       let data = this.state.grpData;
+      let interval = this.state.interval;
+      let minDate = this.state.minDate;
+      let maxDate = this.state.maxDate;
+      /*
+      function getDateFormat(dataLength,interval,minDate,maxDate){
+        let min = moment(minDate);
+        let max = moment(maxDate);
+        max.diff(min)
+      }
+      */
+
+      function xLabelFunc(d) {
+        return moment(d.key).format('HH:mm:ss');
+      }
 
       data.forEach(function(d){
         var prevValue = 0;
@@ -94,11 +105,11 @@ define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3ti
       yRange.domain([0,d3.max(data,function(d){
         return d.total;
       })]);
-
+      /*
       if(data.length > 0) {
         debugger;
       }
-
+      */
       chart.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + this.height + ")")
@@ -138,7 +149,8 @@ define(['lodash','react','moment','d3','d3tip'], function(_,React,moment,d3,d3ti
         .attr("y", function(d) { return yRange(d.curr); })
         .attr("height", function(d) {
           height = (yRange(d.prev) - yRange(d.curr));
-          return (0 < height && 1 > height)?height*100:height;
+          return (0 < height && 1 > height)?1:height;
+          //return height;
         })
         .style("fill",function(d) {return colors(d.name)})
         .on('mouseover',this.tip.show)

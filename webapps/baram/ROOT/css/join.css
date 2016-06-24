@@ -1,0 +1,205 @@
+.joinHeader {
+	position: fixed;
+	width: 100%;
+	height: 50px;
+	background-color: #3376ad;
+}
+.joinLogo {
+	height: 50px;
+	width: 114px;
+	margin: 0 auto;
+}
+.joinLogo img {
+	display: block;
+	float: left;
+	height: 50px;
+	width: 114px;
+}
+.joinContainer {
+	margin-top: 50px;
+	float: left;
+	width: 1919px;
+	min-height: 915px;
+}
+.joinFormWrap {
+	width: 600px;
+	height: 553px;
+	margin: 0 auto;
+	margin-top: 130px;
+}
+
+.joinFormHeader {
+	background: #3376ad; /* Old browsers */
+	background: -moz-linear-gradient(top,  #4897c8 0%, #2a72ad 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#4897c8), color-stop(100%,#2a72ad)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #4897c8 0%,#2a72ad 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #4897c8 0%,#2a72ad 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #4897c8 0%,#2a72ad 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #4897c8 0%,#2a72ad 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4897c8', endColorstr='#2a72ad',GradientType=0 ); /* IE6-9 */
+	float: left;
+	height: 44px;
+	width: 600px;
+}
+
+
+.joinicon {
+	float: left;
+	display: block;
+	width: 41px;
+	height: 41px;
+}
+
+.joinTitle {
+	display:block;
+	color:#fff;
+	font:15px/44px  Open Sans, sans-serif;
+	margin-left:30px;
+	float: left;
+	min-height:44px;
+	min-width:300px;
+}
+
+.joinFormContent {
+	width: 600px;
+	float: left;
+	height: 509px;
+}
+
+.joinFormContentTop {
+	margin-bottom:5px;
+	width: 600px;
+	float: left;
+	height: 32px;
+	font: 12px/45px Open Sans, sans-serif;
+	text-align: left;
+}
+
+.joinFormContentMiddle {
+	float: left;
+	min-height: 320px;
+	width: 600px;
+	border-top: 1px solid #a4a4a4;
+}
+
+.joinFormContentMiddleLeft {
+	width: 302px;
+	min-height: 320px;
+	float: left;
+	
+}
+
+.joinFormContentMiddleLeftTop {
+	width: 302px;
+	float: left;
+	height: 18px;
+	font: 11px/26px Open Sans, sans-serif;
+	color: #a4a4a4;
+	text-align: left;
+}
+.joinInputWrap {
+	width: 302px;
+	float: left;
+	height: 58px;
+}
+
+.joinInputText {
+	width: 302px;
+	float: left;
+	height: 22px;
+	font: 12px/28px Open Sans, sans-serif;
+	text-align: left;
+}
+
+.joinInputbox {
+	width: 274px;
+	float: left;
+	height: 29px;
+	border: 1px solid #a4a4a4;
+ 	border-radius: 4px; 
+ 	padding-left:10px;
+ 	margin-top:3px;
+}
+
+.joinSelectboxWrap {
+	float: left;
+	min-height: 25px;
+		margin-top:3px;
+}
+
+.joinSelectBoxStyle {
+	width: 289px;
+}
+
+
+.joinContentMiddleRight {
+	width: 296px;
+	min-height: 320px;
+	float: left;
+	border-left: 1px solid #a4a4a4;
+}
+.joinContentMiddleRightTop {
+	width: 266px;
+	height: 100px;
+	float: left;
+	
+	margin-top: 20px;
+	margin-left: 15px;
+}
+.joinContentMiddleRightTopTitle {
+	font: bold 12px/12px Open Sans, sans-serif;
+	width: 266px;
+	height: 11px;
+	float: left;
+}
+.joinContentMiddleRightTopSubTitle {
+	margin-top: 14px;
+	font: 11px/11px Open Sans, sans-serif;
+	color: #a4a4a4;
+	float: left;
+	width: 266px;
+	height: 11px;
+}
+.joinContentMiddleRightBottom {
+	float: left;
+	width: 266px;
+	height: 199px;
+	border-top: 1px solid #a4a4a4;
+	margin-left: 15px;
+}
+
+.joinContentBottom {
+	float: left;
+	width: 600px;
+	min-height: 60px;
+}
+.joinContentBottomText {
+	float: left;
+	width: 600px;
+	margin-top: 38px;
+	height: 23px;
+}
+.joinContentBottombutton {
+	margin-top: 15px;
+	float: left;
+	width: 522px;
+	height: 35px;
+	padding-left: 49px;
+}
+.loginBtn {
+	text-align: center;
+	font: bold 12px/33px Open Sans, sans-serif;
+	text-decoration: none;
+	float: left;
+	display: block;
+	color: #fff;
+	width: 244px;
+	height: 33px;
+	border: 1px solid #3376ad;
+	cursor: pointer;
+	border-radius: 5px;
+	background-color: #3376ad;
+	margin-right: 15px;
+}
+
+
