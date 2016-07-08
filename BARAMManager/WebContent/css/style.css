@@ -1,189 +1,191 @@
-.fc_p1 {
-	color: #686868;
-}
-
-.comm_tab1 {
-	display: block;
-	clear: both;
-	*zoom: 1;
-}
-.comm_tab1:after {
-	display: block;
-	height: 0;
-	content: ".";
-	font-size: 0;
-	visibility: hidden;
-	clear: both
-}
-
-.comm_tab1 > .tab_menu {
-	float: left;
-	width: 135px;
-	min-height: 637px;
-	background-color: #d9dee0;
-	padding-top: 45px;
-	-webkit-box-shadow: inset 0 6px 3px -3px #888888;
-	box-shadow: inset 0 6px 3px -3px #888888;
-	-moz-box-shadow-top: inset 0 6px 3px -3px #888888;
-}
-
-.comm_tab1 > .tab_menu > .liba {
-	float: left;
-	text-align: center;
-	width: 123px;
-	height: 120px;
-	margin-left: 12px;
-	margin-bottom: 14px;
-	border-radius: 5px 0 0 5px;
-	background-color: #a4abaf;
-	/*background-image: url('../img/Untitled-1.png');
-	 background-repeat: no-repeat;*/
-
-}
-.tabOn{
-	float: left;
-	text-align: center;
-	width: 123px;
-	height: 120px;
-	margin-left: 12px;
-	margin-bottom: 14px;
-	border-radius: 5px 0 0 5px;
-	background-image: url('../img/tab/onback.png');
-	 background-repeat: no-repeat;
-	 background-color: #fff;
-}
-.imgblue {
-	
-	margin-top: 20px;
-	/* cursor: pointer; */
-}
-.imgw {
-	margin-top: 20px;
-	/* cursor: pointer; */
-}
-.comm_tab1 > .tab_menu .tit {
-	display: block;
-	color: #fff;
-	/* cursor: pointer; */
-	text-decoration: none;
-	width: 123px;
-	min-height: 18px;
-	font-weight: bold;
-}
-.comm_tab1 > .tab_menu .onTit {
-	display: block;
-	color: #2d6eb1;
-	/* cursor: pointer; */
-	text-decoration: none;
-	width: 123px;
-	min-height: 18px;
-	font-weight: bold;
-}
-
-.comm_tab1 > .tab_menu .on {
-	position: relative;
-	background-color: #fff;
-	width: 123px;
-	min-height: 18px;
-	background-image: url('../img/tab/onback.png');
-	 background-repeat: no-repeat;
-}
-.comm_tab1 > .tab_menu .on .imgblue {
-	display: block;
-	margin-left: 37px;
-}
-.comm_tab1 > .tab_menu .on .imgw {
-	display: none;
-}
-
-.comm_tab1 > .tab_menu .on .tit {
-	min-height: 18px;
-
-	width: 123px;
-}
-
-.comm_tab1 > .tab_cont {
-	float: left;
-	width: 839px;
-	min-height: 682px;
-	background-color: #fff;
-}
-.comm_tab1 > .tab_cont > .cont {
-	width: 839px;
-	min-height: 682px;
-	box-shadow: -5px 0 5px 0 rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: -5px 0 5px 0 rgba(0, 0, 0, 0.3);
-}
-.comm_tab1 > .tab_cont > .cont:first-child {
-	border-top-left-radius: 0
-}
-.comm_tab1 .comm_refer {
-	margin: 5px 0 18px 15px
-}
-
-.comm_tab2 {
-	font:15px/20px Malgun Gothic;
-	
-	display: block;
-	clear: both;
-	*zoom: 1
-}
-.comm_tab2:after {
-	display: block;
-	height: 0;
-	content: ".";
-	font-size: 0;
-	visibility: hidden;
-	clear: both
-}
-.comm_tab2 > .tab_menu {
-	float: left;
-	margin-top: 10px;
-	margin-left: 3px;
-}
-.comm_tab2 > .tab_menu > li {
-	float: left;
-	text-align: center;
-	font: 13px/20px Dotum;
-	white-space: nowrap;
-	margin-left: 4px;
-}
-.comm_tab2 > .tab_menu .tit {
-	display: block;
-	height: 26px;
-	padding: 5px 20px;
-	font-weight: bold;
-	color: #35383c;
-	border-radius: 15px;
-	text-decoration: none;
-	cursor: pointer;
-	width: 75px;
-}
-.comm_tab2 > .tab_menu .on {
-	position: relative
-}
-.comm_tab2 > .tab_menu .on .tit {
-	height: 20px;
-	background-color: #35383c;
-	color: #fff;
-	box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: 0px -1px 3px rgba(0, 0, 0, 0.3);
-}
-.comm_tab2 > .tab_cont {
-	float: left;
+header {
 	width: 100%;
-	clear: both;
-	margin-top: -7px
+	background-color: #2766a8;
+	height: 50px;
+	margin-bottom: 20px;
 }
-.comm_tab2 > .tab_cont .cont {
-	padding: 25px;
-	font-size: 14px;
-	color: #666;
-	background-color: #fff;
-	border-top: 1px solid #c4c4c5;
-	min-height: 615px;
-	margin-top: 6px;
+
+.selectBox {
+	width: 100%;
+	height: 30px;
+	font: 13px/20px Malgun Gothic;
+	border-radius: 3px;
+	cursor: pointer;
 }
-.comm_tab2 > .tab_cont > .cont:last-child {
-	border-top-right-radius: 0
+.tabBg {
+	padding: 10px; min-height: 600px;width:700px;
+	float:left;
+}
+.tabTitle {
+	text-align: left;
+	margin-top: 25px;
+	margin-bottom: 20px;
+	padding-left: 10px;
+}
+
+.tabWrap {
+	
+	float:left;
+	font: 15px/20px Malgun Gothic;
+	min-height: 470px;
+}
+
+.tabControllBtn {
+	
+	float:left;
+	font: 15px/20px Malgun Gothic;
+	
+	border-bottom:1px solid #dddddd;
+}
+
+.btnWrap {
+	width: 220px;
+	float: right;
+	margin-top: 20px;
+}
+.startbtnWrap {
+	width: 170px;
+	/* float: left; */
+margin:0 auto;
+}
+.modifybtnWrap {
+	height:30px;
+	width: 380px;
+	
+margin:0 auto;
+}
+
+.btnStyle {
+	float: left;
+	width: 100px;
+	height: 30px;
+	font: 13px/8px Malgun Gothic;
+	margin-left: 10px;
+	cursor: pointer;
+	color: #fff;
+	border: 1px solid #2766a8;
+	background-color: #2766a8;
+	border-radius: 3px;
+}
+
+.btnStyle:hover {
+	color: #fff;
+	text-decoration: none;
+	font: bold 13px/8px Malgun Gothic;
+}
+.startbtnStyle {
+	float: left;
+	width: 180px;
+	height: 30px;
+	font: 13px/8px Malgun Gothic;
+	margin-left: 10px;
+	cursor: pointer;
+	color: #fff;
+	border: 1px solid #2766a8;
+	background-color: #2766a8;
+	border-radius: 3px;
+}
+
+.startbtnStyle:hover {
+	color: #fff;
+	text-decoration: none;
+	font: bold 13px/8px Malgun Gothic;
+}
+.modifybtnStyle {
+	float: left;
+	width: 180px;
+	height: 30px;
+	font: 13px/8px Malgun Gothic;
+	margin-left: 10px;
+	cursor: pointer;
+	color: gray;
+	background-color: #e5e5e5;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+.modifybtnStyle:hover {
+		color: #000;
+	text-decoration: none;
+	font: bold 13px/8px Malgun Gothic;
+}
+
+.btnStyle1 {
+	float: left;
+	width: 100px;
+	height: 30px;
+	font: 13px/8px Malgun Gothic;
+	margin-left: 10px;
+	cursor: pointer;
+	color: gray;
+	background-color: #e5e5e5;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+}
+
+.btnStyle1:hover {
+	text-decoration: none;
+	font: bold 13px/8px Malgun Gothic;
+	color: #000;
+}
+
+.ParametersWrap {
+	float: left;
+	margin-top: 20px;
+	margin-top: 20px;
+	width: 610px;
+	font: 13px/8px Malgun Gothic;
+	color:#555555;
+}
+
+.ParametersName {
+	float: left;
+	width: 235px;
+	height: 25px;
+	background-color: #eee;
+	border: 0;
+}
+.ParametersNameRunning {
+	float: left;
+	min-width: 80px;
+	height: 25px;
+	background-color: #eee;
+	border: 0;
+}
+
+.ParametersInput {
+	float: left;
+	width: 356px;
+	height: 25px;
+	margin-left: 0px;
+	border:1px solid #dddddd;
+border-radius: 3px;
+padding-left:5px;
+}
+
+.sms {
+	float: left;
+	height: 25px;
+	width: 8px;
+	font: 12px/25px Malgun Gothic;
+	color: #000;
+}
+
+.timeSettinsWrap {
+	float:left;
+	width:655px;
+	padding-left:10px;
+	padding-right:10px;
+	min-height: 450px;
+	 margin-left:10px;
+	border-top:1px solid #ddd;
+}
+.startWrap {
+	float:left;
+	width:655px;
+	padding-left:10px;
+	padding-right:10px;
+	min-height: 80px;
+	 margin-left:10px;
+	border-top:1px solid #ddd;
 }

@@ -1,0 +1,1510 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"margin-",
+				"margin-left"
+			],
+			[
+				"font",
+				"font-family"
+			],
+			[
+				"wi",
+				"width"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"tr",
+				"trim()	String"
+			],
+			[
+				"class",
+				"class	Attr"
+			],
+			[
+				"ov",
+				"overflow"
+			],
+			[
+				"text",
+				"textarea	Tag"
+			],
+			[
+				"forEach",
+				"forEach(callback)	Array"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"React",
+				"React.Component	Component Template (ES2015)"
+			],
+			[
+				"Reac",
+				"React.Component	Component Template (ES2015)"
+			],
+			[
+				"instan",
+				"instanceof(Object)	Object"
+			],
+			[
+				"compon",
+				"componentDidMount	Life Cycle Method"
+			],
+			[
+				"prop",
+				"propTypes	Prop Validation"
+			],
+			[
+				"Pro",
+				"Promise	ES6 Promise"
+			],
+			[
+				"stop",
+				"stopPropagation()	Event"
+			],
+			[
+				"ma",
+				"margin-top"
+			],
+			[
+				"getE",
+				"getElementsByTagName(name)	Element"
+			],
+			[
+				"w",
+				"width"
+			],
+			[
+				"inher",
+				"util.inherits(ctor, superCtor);"
+			],
+			[
+				"eve",
+				"events.EventEmitter();"
+			],
+			[
+				"OC",
+				"OC_Filesystem"
+			],
+			[
+				"de",
+				"Device"
+			],
+			[
+				"br",
+				"browser"
+			],
+			[
+				"brow",
+				"browserRegex"
+			],
+			[
+				"dev",
+				"deviceRegex"
+			],
+			[
+				"preg",
+				"preg_grep"
+			],
+			[
+				"json",
+				"json_encode"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"_",
+				"_SERVER"
+			],
+			[
+				"pri",
+				"print_r"
+			],
+			[
+				"for",
+				"foreach	foreach …"
+			],
+			[
+				"file",
+				"filePrefix"
+			],
+			[
+				"agent",
+				"agentDir"
+			],
+			[
+				"str_r",
+				"str_replace"
+			],
+			[
+				"fil",
+				"filter"
+			],
+			[
+				"str_",
+				"str_split"
+			],
+			[
+				"pr",
+				"print"
+			],
+			[
+				"en",
+				"encryptText"
+			],
+			[
+				"연락",
+				"연락처"
+			],
+			[
+				"Con",
+				"Contacts"
+			],
+			[
+				"사용",
+				"사용할"
+			],
+			[
+				"db",
+				"dbpassword"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"contents": "curl -XGET '192.168.0.126:9200//baramtwit-2016.05.01/unstructured_data/_search?pretty' -d '{\n  \"_source\":true,\n  \"explain\":false,\n  \"sort\":[{\"@timestamp\":{\"order\":\"desc\",\"unmapped_type\":\"boolean\"}}],\n  \"query\":{\n    \"bool\":{\n      \"must\":[{\"match_all\":{}}],\n      \"filter\":{\n        \"script\":{\n          \"script\":\"doc[\\\"CATEGORY\\\"].value.length() == 3\"\n        }\n      }\n    }\n  }\n}'\ncurl -XPOST \"http://localhost:9200/_msearch?timeout=0&ignore_unavailable=true\" -d '{\"index\":[\"baram-2016.04.15\"],\"ignore_unavailable\":true}\n{\"size\":0,\"sort\":[{\"@timestamp\":{\"order\":\"desc\",\"unmapped_type\":\"boolean\"}}],\"query\":{\"filtered\":{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":{\"bool\":{\"must\":[{\"range\":{\"@timestamp\":{\"gte\":1460646000000,\"lte\":1460732399000,\"format\":\"epoch_millis\"}}}],\"must_not\":[]}}}},\"aggs\":{\"2\":{\"date_histogram\":{\"field\":\"@timestamp\",\"interval\":\"2m\",\"time_zone\":\"Asia/Seoul\",\"min_doc_count\":0,\"extended_bounds\":{\"min\":1460646000000,\"max\":1460732399000}}}},\"fields\":[\"*\",\"_source\"],\"script_fields\":{},\"fielddata_fields\":[\"@timestamp\",\"received_at\"]}\n'\n\n\n{\n  \"sort\": [\n    {\n      \"@timestamp\": {\n        \"order\": \"desc\",\n        \"unmapped_type\": \"boolean\"\n      }\n    }\n  ],\n  \"query\": {\n    \"filtered\": {\n      \"query\": {\n        \"query_string\": {\n          \"analyze_wildcard\": true,\n          \"query\": \"*\"\n        }\n      },\n      \"filter\": {\n        \"bool\": {\n          \"must\": [\n            {\n              \"range\": {\n                \"@timestamp\": {\n                  \"gte\": 1462201200000,\n                  \"lte\": 1462287599000,\n                  \"format\": \"epoch_millis\"\n                }\n              }\n            }\n          ],\n          \"must_not\": []\n        }\n      }\n    }\n  },\n  \"aggs\": {\n    \"2\": {\n      \"date_histogram\": {\n        \"field\": \"@timestamp\",\n        \"interval\": \"3h\",\n        \"time_zone\": \"Asia/Seoul\",\n        \"min_doc_count\": 0,\n        \"extended_bounds\": {\n          \"min\": 1462201200000,\n          \"max\": 1462287599000\n        }\n      }\n    }\n  },\n  \"fields\": [\n    \"*\",\n    \"_source\"\n  ],\n  \"script_fields\": {},\n  \"fielddata_fields\": [\n    \"@timestamp\",\n    \"received_at\"\n  ]\n}",
+			"file": "searchQueries.txt",
+			"file_size": 2228,
+			"file_write_time": 131093026997567046,
+			"settings":
+			{
+				"buffer_size": 2150,
+				"line_ending": "Windows",
+				"name": "curl -XGET '192.168.0.126:9200//baramtwit-2016.05."
+			}
+		},
+		{
+			"file": "web/src/ui/jsx/util/counts.jsx",
+			"settings":
+			{
+				"buffer_size": 8286,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "web/src/ui/jsx/util/stringtomoment.jsx",
+			"settings":
+			{
+				"buffer_size": 1096,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "web/src/ui/jsx/content.jsx",
+			"settings":
+			{
+				"buffer_size": 2347,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "BARAMManager/WebContent/js/monitor_chart.js",
+			"settings":
+			{
+				"buffer_size": 2207,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "BARAMManager/WebContent/monitor.jsp",
+			"settings":
+			{
+				"buffer_size": 4578,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "BARAMManager/WebContent/include/menu.jsp",
+			"settings":
+			{
+				"buffer_size": 481,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "BARAMManager/WebContent/css/monitor.css",
+			"settings":
+			{
+				"buffer_size": 1292,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "BARAMManager/WebContent/js/monitor.js",
+			"settings":
+			{
+				"buffer_size": 4301,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "BARAMManager/WebContent/server/taillog.jsp",
+			"settings":
+			{
+				"buffer_size": 356,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "BARAMManager/WebContent/server/monitoring.jsp",
+			"settings":
+			{
+				"buffer_size": 513,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "web/src/ui/jsx/header.jsx",
+			"settings":
+			{
+				"buffer_size": 1669,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "conf/config.json",
+			"settings":
+			{
+				"buffer_size": 324,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "web/src/ui/jsx/visualization/dateHistogram.jsx",
+			"settings":
+			{
+				"buffer_size": 4978,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "web/src/ui/jsx/visualization/stackedBar.jsx",
+			"settings":
+			{
+				"buffer_size": 6448,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "conf/web.json",
+			"settings":
+			{
+				"buffer_size": 79,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "pci",
+		"selected_items":
+		[
+			[
+				"pci",
+				"Package Control: Install Package"
+			],
+			[
+				"git",
+				"Git: Pull"
+			],
+			[
+				"git ",
+				"Git: Push Current Branch"
+			],
+			[
+				"github ",
+				"Github: Plugin Settings"
+			],
+			[
+				"evernote up",
+				"Evernote: Update Evernote Note"
+			],
+			[
+				"evernote link",
+				"Evernote: Insert link to a note (browse)"
+			],
+			[
+				"evernote op",
+				"Evernote: Open Evernote Note"
+			],
+			[
+				"evernote",
+				"Evernote: Send to Evernote as new note"
+			],
+			[
+				"ev ne",
+				"Evernote: New empty note"
+			],
+			[
+				"ev up",
+				"Evernote: Update Evernote Note"
+			],
+			[
+				"ev op",
+				"Evernote: Open Evernote Note"
+			],
+			[
+				"ev o",
+				"Evernote: Open Evernote Note"
+			],
+			[
+				"ev u",
+				"Evernote: Update Evernote Note"
+			],
+			[
+				"ev",
+				"Evernote: Open Evernote Note"
+			],
+			[
+				"ev ",
+				"Evernote: Clear Notebook Cache"
+			],
+			[
+				"ev s",
+				"Evernote: Search Note"
+			],
+			[
+				"ev se",
+				"Evernote: Search Note"
+			],
+			[
+				"ev attach",
+				"Evernote: Insert Attachment Here"
+			],
+			[
+				"ev a",
+				"Evernote: Insert Attachment Here"
+			],
+			[
+				"ev new",
+				"Evernote: Send to Evernote as new note"
+			],
+			[
+				"Evernote",
+				"Evernote: Update Evernote Note"
+			],
+			[
+				"e",
+				"Evernote: List linked notes"
+			],
+			[
+				"pcl",
+				"Package Control: List Packages"
+			],
+			[
+				"pcr",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: i",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 400.0
+	},
+	"console":
+	{
+		"height": 191.0,
+		"history":
+		[
+			"import urllib.request,os; pr='Preferences.sublime-settings'; ip='ignored_packages'; n='Package Control'; s=sublime.load_settings(pr); ig=s.get(ip); ig.append(n); s.set(ip,ig); sublime.save_settings('Preferences.sublime-settings'); pf=n+'.sublime-package'; urllib.request.install_opener(urllib.request.build_opener(urllib.request.ProxyHandler())); by=urllib.request.urlopen('https://packagecontrol.io/'+pf.replace(' ','%20')).read(); open(os.path.join(sublime.installed_packages_path(),pf),'wb').write(by); ig.remove(n); s.set(ip,ig); sublime.save_settings(pr); print('Package Control: 3.0.0 upgrade successful!')",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/BARAMManager",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/BARAMManager/WebContent",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/BARAMManager/WebContent/server",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/conf",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/config",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/ui",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/ui/jsx"
+	],
+	"file_history":
+	[
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/BARAMManager/WebContent/css/Manager.css",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/BARAMManager/WebContent/modify.jsp",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/BARAMManager/WebContent/include/menu.jsp",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/BARAMManager/WebContent/css/monitor.css",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/BARAMManager/WebContent/js/monitor.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/BARAMManager/WebContent/monitor.jsp",
+		"/C/Users/SGcom/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/js/require.config.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/conf/config.json",
+		"/C/Users/SGcom/AppData/Local/Temp/_AZTMP1_/counts.jsx",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/ui/jsx/visualization/stackedBar.jsx",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/start.cmd",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web_search.html",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/.gitignore",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/routes.jsx",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/ui/layout/footer.jsx",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/bower.json",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/semantic.json",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/semantic/tasks/build.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/semantic/gulpfile.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/node_modules/debug/debug.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/bower.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/util/counts.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/ui/module/Logcount.jsx",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/ui/module/Snssearch.jsx",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/ui/layout/header.jsx",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/ui/layout/content.jsx",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/ui/module/Leakcount.jsx",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/semantic/dist/semantic.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/server.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/ui/visualization/datehistogram.jsx",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/util/stringtomoment.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/util/ajaxrequest.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/index.html",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/webpack.config.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/package.json",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/server.dev.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/node_modules/whatwg-fetch/fetch.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/.eslintignore",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/node_modules/d3tip/dist/d3tip.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/ui/layout/header.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/ui/layout/footer.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/web/src/ui/layout/content.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/.babelrc",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/.gitignore",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/.eslintrc",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/netexample.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/node_modules/fetch/lib/fetch.js",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/node_modules/iconv-lite/encodings/tables/gb18030-ranges.json",
+		"/C/Users/SGcom/Documents/GitHub/visualbaram-webpack/node_modules/moment-timezone/data/packed/latest.json",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/js/config.js",
+		"/C/Users/SGcom/AppData/Roaming/Sublime Text 3/Packages/User/Emmet.sublime-settings",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/conf-demo/weblog-to-es/index.mapping.template",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/conf-demo/weblog-to-es/index.mapping.template.json",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/js/init.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/modules/react/react-dom.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/ui/jsx/util/ajaxRequest.jsx",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/ui/jsx/util/counts.jsx",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/modules/react/react-dom.min.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/modules/react/react-with-addons.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/modules/react/react-with-addons.min.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/index.html",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/index.html",
+		"/C/Users/SGcom/Documents/GitHub/redux/examples/async/containers/App.js",
+		"/C/Users/SGcom/sgpark_Google_Drive/정부과제/스트림 데이터 고속 시각화/프로토타입 시각화 관련/kibana_discover_requests_daily_search.txt",
+		"/C/Users/SGcom/sgpark_Google_Drive/정부과제/스트림 데이터 고속 시각화/프로토타입 시각화 관련/kibana_discover_requests.txt",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/ui/jsx/footer.jsx",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/index.html",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/ui/jsx/header.jsx",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/modules/fetch/fetch.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/modules/bluebird/bluebird.core.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/modules/requirejs/config.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/ui/jsx/sidebar.jsx",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/modules/jquery/jquery-1.12.1.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/ui/jsx/content.jsx",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/css/init.css",
+		"/C/Users/SGcom/AppData/Roaming/Sublime Text 3/Packages/Emmet/Default (Windows).sublime-keymap",
+		"/C/Users/SGcom/AppData/Roaming/Sublime Text 3/Packages/Emmet/Emmet.sublime-settings",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/ui/jsx/template.txt",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/re.xml",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/source.html",
+		"/C/Users/SGcom/Documents/EclipsePrj/VisualBaram/web/src/ui/jsx/init.jsx",
+		"/C/Users/SGcom/sgpark_Google_Drive/정부과제/스트림 데이터 고속 시각화/프로토타입 시각화 관련/kibana_discover.txt",
+		"/C/Users/SGcom/AppData/Roaming/Sublime Text 3/Packages/User/Github Tools.sublime-settings",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/web/modules/jreact-master/README.md",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/web/modules/semantic-ui/react-semantify.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/web/modules/semantic-ui/react-semantify.min.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/web/modules/semantic-ui/semantic.min.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/web/modules/requirejs-react-jsx/jsx.js",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/web/src/css/init.css",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/web/modules/noto-fonts/fonts.css",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/web/src/index.html",
+		"/C/Users/SGcom/Documents/EclipsePrj/project-baram/web/src/ui/jsx/init.jsx",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana/src/server/KbnServer.js",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana/src/cli/serve/serve.js",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana/package.json",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana/src/cli/cli.js",
+		"/C/Users/SGcom/AppData/Roaming/Sublime Text 3/Packages/User/Evernote.sublime-settings",
+		"/C/Users/SGcom/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/c/users/sgcom/appdata/local/temp/tmpfnaega.png",
+		"/C/Users/SGcom/AppData/Roaming/Sublime Text 3/Packages/Evernote/Evernote.sublime-settings",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana/CONTRIBUTING.md",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana/README.md",
+		"/C/Users/SGcom/Documents/NodejsPrj/BasicStudy/myapp/app.js",
+		"/C/Users/SGcom/Documents/NodejsPrj/BasicStudy/radio.js",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana/src/cli/cluster/ClusterManager.js",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana/src/server/views/index.jade",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana/bin/kibana.bat",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana/.eslintignore",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana/.gitignore",
+		"/C/Users/SGcom/AppData/Roaming/Sublime Text 3/Packages/Nodejs/Nodejs.sublime-settings",
+		"/C/Users/SGcom/AppData/Roaming/Sublime Text 3/Packages/SFTP/Default (OSX).sublime-keymap",
+		"/C/Users/SGcom/Documents/NodejsPrj/kibana-4.2.1/.project",
+		"/D/SourceDir/myplacetalk/common/class/Common.class.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/templates/activity.box.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/lib/backgroundjob/expireactivities.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/lib/backgroundjob/emailnotification.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/lib/usersettings.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/lib/parameterhelper.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/lib/navigation.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/lib/mailqueuehandler.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/lib/hooks.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/lib/grouphelper.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/lib/display.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/lib/datahelper.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/lib/data.php",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/sftp-config.json",
+		"/C/Users/SGcom/Documents/GitHub/oc-audit_log/templates/activities.part.php"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 90.0,
+		"where_history":
+		[
+			"<open folders>,-data*.json",
+			"<open folders>,-data.json",
+			"<open folders>",
+			"<open files>",
+			"<open folders>",
+			"C:\\Users\\SGcom\\Documents\\GitHub\\ownCloud-Core\\",
+			"C:\\Users\\SGcom\\Documents\\GitHub\\ownCloud-Core\\apps\\activity,-*\\l10n\\*",
+			"C:\\Users\\SGcom\\Documents\\GitHub\\ownCloud-Core\\apps\\activity,-l10n",
+			"C:\\Users\\SGcom\\Documents\\GitHub\\ownCloud-Core\\apps\\activity",
+			"C:\\Users\\SGcom\\Documents\\GitHub\\ownCloud-Core\\",
+			"C:\\Users\\SGcom\\Documents\\ownCloud",
+			"D:\\SublimePrj\\owncloud",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"=.+",
+			"\\t",
+			".btn",
+			"=\"\"",
+			"space",
+			"tab",
+			"\\t",
+			"StackedBar",
+			"192.168.0.126",
+			"minDate",
+			"xLabelFunc",
+			"DateHistogram",
+			"this.legends",
+			"xLabelFunc",
+			"strtomoment",
+			":",
+			"isHidden",
+			":",
+			"\"",
+			"\"TIME\":",
+			"\"LOC\":",
+			"\"CATEGORY\":",
+			"\"message\":",
+			"\"ID\":",
+			"\"",
+			"\n",
+			"\"",
+			"'",
+			",]",
+			"],",
+			",  ",
+			"\n",
+			"]",
+			", ",
+			"\n",
+			", ",
+			"\n",
+			", ",
+			"\n",
+			", ",
+			"\n",
+			", ",
+			"\n",
+			"  ",
+			"\\([一-龥0-9\\.]+\\)",
+			"\\([一-龥0-9]+\\)",
+			"\\([一-龥]*\\)",
+			"  ",
+			"class",
+			"checkbox",
+			"static/",
+			"dist",
+			"ms@",
+			"debug@",
+			"Content",
+			"index.html",
+			"devServer",
+			"import",
+			"\"",
+			"ReactDOM",
+			"fetch",
+			"this.chartInterval",
+			"UTC_FULL_DATE",
+			"\n",
+			"-",
+			"**",
+			"VALUE_STRING",
+			"    ",
+			"\\t",
+			"\"",
+			"**DATE**",
+			"port",
+			"referrer",
+			"refer",
+			"\\t",
+			"currentTimeZone",
+			"chartInterval",
+			"getIndices",
+			"getFieldStats",
+			"graphData",
+			"reactdom",
+			"react",
+			"version",
+			"},",
+			"Promise",
+			"semantic",
+			"$",
+			"jquery",
+			"reqBody",
+			"olive",
+			"\n",
+			"n",
+			"  ",
+			"\n",
+			"  ",
+			"\\\"",
+			"'",
+			"\\\"",
+			"\n",
+			"{\n",
+			" ",
+			"\"",
+			"abbre",
+			"\"",
+			"exports",
+			"define(",
+			"class=",
+			"sideBar",
+			"_dereq_",
+			"window.React",
+			"(window.React)",
+			"jQuery",
+			"window",
+			"var _react",
+			"_react",
+			"_react2",
+			"PropTypes",
+			"propTypes",
+			"class",
+			"tab",
+			"space",
+			"trim",
+			"tab",
+			"space",
+			"tab",
+			" ",
+			"-",
+			"styleguid"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"",
+			"  ",
+			"localhost",
+			"'",
+			"",
+			"\\\"",
+			"'",
+			"\"",
+			"",
+			"'",
+			"_",
+			"##",
+			"  ",
+			"\\\"",
+			"**YYYY.MM.DD**",
+			"  ",
+			"",
+			"\"",
+			"\\\"",
+			"'",
+			"",
+			"\\\"",
+			"'",
+			"className=",
+			"React",
+			"(React)",
+			"className",
+			"(",
+			"보안감사",
+			"Audit_log",
+			"audit_log",
+			"'log_id'",
+			"'audit_log'",
+			"\\n",
+			"font-size:12px; line-height:160%;",
+			"<br>",
+			".."
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 9,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "searchQueries.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2150,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1243,
+								1243
+							]
+						],
+						"settings":
+						{
+							"auto_name": "curl -XGET '192.168.0.126:9200//baramtwit-2016.05.",
+							"is_init_dirty_state": true,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "web/src/ui/jsx/util/counts.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8286,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1080,
+								1072
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/JSX/JSX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1182.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "web/src/ui/jsx/util/stringtomoment.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1096,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								555,
+								555
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/JSX/JSX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "web/src/ui/jsx/content.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2347,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2142,
+								2142
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/JSX/JSX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "BARAMManager/WebContent/js/monitor_chart.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2207,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								266,
+								273
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"open_with_edit": true,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "BARAMManager/WebContent/monitor.jsp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4578,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1125,
+								1125
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Java/Java Server Pages (JSP).sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "BARAMManager/WebContent/include/menu.jsp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 481,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								481,
+								481
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Java/Java Server Pages (JSP).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "BARAMManager/WebContent/css/monitor.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1292,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1085,
+								1085
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 347.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "BARAMManager/WebContent/js/monitor.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4301,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								72,
+								72
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "BARAMManager/WebContent/server/taillog.jsp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 356,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								350,
+								350
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/Java/Java Server Pages (JSP).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "BARAMManager/WebContent/server/monitoring.jsp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 513,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								513,
+								513
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/Java/Java Server Pages (JSP).sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "web/src/ui/jsx/header.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1669,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1666,
+								1666
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/JSX/JSX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "conf/config.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 324,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								321,
+								199
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "web/src/ui/jsx/visualization/dateHistogram.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4978,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2022,
+								1974
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/JSX/JSX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 576.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "web/src/ui/jsx/visualization/stackedBar.jsx",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6448,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2974,
+								2974
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "UTF-8",
+							"syntax": "Packages/JSX/JSX.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1117.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "conf/web.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 79,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								76,
+								76
+							]
+						],
+						"settings":
+						{
+							"is_init_dirty_state": false,
+							"origin_encoding": "ASCII",
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 24.0
+	},
+	"input":
+	{
+		"height": 36.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 106.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git":
+	{
+		"height": 246.0
+	},
+	"output.sftp":
+	{
+		"height": 324.0
+	},
+	"pinned_build_system": "",
+	"project": "visualbaram.sublime-project",
+	"replace":
+	{
+		"height": 62.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"delete.php",
+				"apps\\files\\ajax\\delete.php"
+			],
+			[
+				"util",
+				"lib\\private\\util.php"
+			],
+			[
+				"util.php",
+				"lib\\private\\util.php"
+			],
+			[
+				"info.xml",
+				"apps\\admin_migrate\\appinfo\\info.xml"
+			],
+			[
+				"mail.n",
+				"apps\\activity\\templates\\email.notification.php"
+			],
+			[
+				"pre",
+				"lib\\private\\preview.php"
+			],
+			[
+				"preivew.php",
+				"core\\ajax\\preview.php"
+			],
+			[
+				"authentication",
+				"lib\\public\\authentication\\iapachebackend.php"
+			],
+			[
+				"ajax/sh",
+				"core\\ajax\\share.php"
+			],
+			[
+				"email.no",
+				"apps\\activity\\templates\\email.notification.php"
+			],
+			[
+				"mail",
+				"core\\templates\\mail.php"
+			],
+			[
+				"welcom",
+				"core\\skeleton\\welcome.txt"
+			],
+			[
+				"mail.",
+				"themes\\NCDrive\\core\\templates\\mail.php"
+			],
+			[
+				"defaults",
+				"themes\\NCDrive\\defaults.php"
+			],
+			[
+				"fileactions",
+				"apps\\files\\js\\fileactions.js"
+			],
+			[
+				"editor.js",
+				"apps\\files_texteditor\\js\\editor.js"
+			],
+			[
+				"layou",
+				"core\\templates\\layout.base.php"
+			],
+			[
+				"",
+				"apps\\files_sharing\\public.php"
+			],
+			[
+				"cookie",
+				"core\\doc\\admin\\_sources\\sharing_api\\Get_Information_about_a_known_share.txt"
+			],
+			[
+				"config",
+				"lib\\public\\config.php"
+			],
+			[
+				"share.php",
+				"core\\ajax\\share.php"
+			],
+			[
+				"mail.php",
+				"core\\templates\\mail.php"
+			],
+			[
+				"alt",
+				"core\\templates\\altmail.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"D:\\SublimePrj\\owncloud\\owncloudPrj.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 247.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+		"max_columns": 1
+	}
+}

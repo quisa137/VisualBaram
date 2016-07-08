@@ -3,6 +3,8 @@ package baram.manager.monitor;
 import java.io.File;
 import java.io.IOException;
 import java.lang.management.MemoryUsage;
+import java.net.SocketException;
+import java.rmi.ConnectException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -14,6 +16,8 @@ import javax.management.openmbean.CompositeData;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
+
+import org.json.JSONObject;
 
 public class JMXClient {
     public MBeanServerConnection connect() throws IOException {
@@ -77,7 +81,7 @@ public class JMXClient {
             Hashtable<String,Object> peakUsage;
             Hashtable<String,Object> currentUsage;
             
-            while(itr_.hasNext()){
+            while(itr_.hasNext()) {
                 Object obj_ = itr_.next();
                 ObjectName objName_ = (ObjectName) obj_;
                 poolInfo = new Hashtable<>();
@@ -119,11 +123,13 @@ public class JMXClient {
             root.put("disk", diskUsage);
             
             return this.parseJSONString(root);
-            
+        
+        } catch (IOException e) {
+            return "Baram is not Connected";
         } catch (Exception e) {
             e.printStackTrace();
+            return "";
         }
-        return null;
     }
     /**
      * Hashtable을 JSON 형식으로 변환하는 메소드
@@ -132,32 +138,6 @@ public class JMXClient {
      * @return
      */
     public String parseJSONString(Hashtable<String,Object> table) {
-        Enumeration<String> keys = table.keys();
-        String key = "";
-        Object value = null;
-        StringBuilder sb = new StringBuilder();
-        sb.append("{");
-        
-        while(keys.hasMoreElements()){
-            key = keys.nextElement();
-            sb.append("\"").append(key).append("\":");
-            value = table.get(key);
-            
-            if(value instanceof Hashtable<?, ?>) {
-                sb.append(this.parseJSONString((Hashtable<String,Object>)value));
-            }else if(value instanceof String) {
-                sb.append("\"").append(value).append("\"");
-            }else if(value instanceof Long
-                    ||value instanceof Integer
-                    ||value instanceof Float
-                    ||value instanceof Double) {
-                sb.append(value);
-            }
-            if(keys.hasMoreElements()) {
-                sb.append(",");
-            }
-        }
-        sb.append("}");
-        return sb.toString();
+        return (new JSONObject(table)).toString();
     }
 }

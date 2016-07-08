@@ -37,7 +37,9 @@ var Chart = function(window,d3,dataArray,targetId,moment) {
   function render() {
 
     //get dimensions based on window size
-    updateDimensions(parseFloat(chart.style('width').replace('px','')));
+	var winWidth = chart.style('width').replace('px','');
+	winWidth = winWidth === "auto"?0:winWidth;
+    updateDimensions(winWidth);
 
     //update x and y scales to new dimensions
     x.range([0, width]);

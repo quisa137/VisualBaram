@@ -4,7 +4,7 @@ $(function(){
     cpuData:[],
     memData:[],
     diskData:[],
-    line:100,
+    seek:0,
     statsTabOpend:true,
     formatBytes:function(bytes,decimals) {
       if(bytes == 0) return '0 Byte';
@@ -18,10 +18,13 @@ $(function(){
       $.get("/server/monitoring.jsp").error(M.dataError).success(M.dataHandler);
     },
     subscribeLogFile:function(){
-      $.get('/server/taillog.jsp',{'line':M.line},M.logHandler);
+      if(M.seek == undefined) {
+    	M.seek = 0;
+      }
+      $.get('/server/taillog.jsp',{'seek':M.seek},M.logHandler);
     },
     dataError:function(){
-      $(".timeTxt").css("color","red").text("Get Data Error");
+      $(".timeTxt").css("color","red").text("Data error or Baram just stopped");
       var table = $(".monitoring");
       table.find(".CpuLoadNum").text("0");
       table.find(".CpuTotalLoadNum").text("0");
@@ -34,11 +37,18 @@ $(function(){
       M.cpuData = [];
       M.memData = [];
       M.diskData = [];
-      Chart(window,d3,M.cpuData,"cpuChart",moment);
-      Chart(window,d3,M.memData,"memChart",moment);
-      Chart(window,d3,M.diskData,"diskChart",moment);
+      if(M.statsTabOpend) {
+       Chart(window,d3,M.cpuData,"cpuChart",moment);
+       Chart(window,d3,M.memData,"memChart",moment);
+       Chart(window,d3,M.diskData,"diskChart",moment);
+      }
+      
     },
     dataHandler:function(resp) {
+      if(resp.trim() === "Baram is not Connected"){
+        M.dataError();
+        return;
+      }
       var data = JSON.parse(resp);
       var statstable = $(".monitoring");
 
@@ -72,8 +82,11 @@ $(function(){
       }
     },
     logHandler:function(resp){
-      $('.logOutput').text(resp.trim());
-      $('.logOutput').scrollTop($('.logOutput')[0].scrollHeight);
+      M.seek = resp.offset;
+      if(M.seek <= 0 || resp.content != ""){
+    	  $('.logOutput').text(resp.content.trim());
+    	  $('.logOutput').scrollTop($('.logOutput')[0].scrollHeight);
+      }
     }
   }
   /*
@@ -88,16 +101,6 @@ $(function(){
   window.setInterval(M.loop, 3000);
   $('.subscribe').click(function(e){
     event.preventDefault();
-    if($('[name=lineLength]').val() == ''){
-      return false;
-    }
-
-    if(!/[0-9]+/.test($('[name=lineLength]').val())){
-      alert('라인 수에는 숫자만 적어주세요');
-      return false;
-    }
-    M.line = $('[name=lineLength]').val();
-    $('[name=lineLength]').prop('readOnly',true);
     $('.subscribe').prop('disabled',true);
 
     M.timerID = window.setInterval(M.subscribeLogFile, 3000);
