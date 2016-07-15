@@ -37,6 +37,7 @@ public class JMXClient {
             Hashtable<String, Object> heapUsage = new Hashtable<>();
             Hashtable<String, Object> nonHeapUsage = new Hashtable<>();
             Hashtable<String, Object> memoryUsage = new Hashtable<>();
+            Hashtable<String, Object> baramUsage = new Hashtable<>();
             root.put("current_timestamp", System.currentTimeMillis());
             // OperatingSystemMBean으로 부터 운영체제 정보를 조회합니다.
             ObjectName stdMBeanName = new ObjectName("java.lang:type=OperatingSystem");
@@ -121,6 +122,19 @@ public class JMXClient {
                 diskUsage.put(r.getAbsolutePath(), diskUsage2);
             }
             root.put("disk", diskUsage);
+            
+            stdMBeanName = new ObjectName("baram.monitor:type=BaramMonitor");
+            if(mbs.isRegistered(stdMBeanName)){
+                baramUsage.put("inputName", mbs.getAttribute(stdMBeanName, "inputName"));
+                baramUsage.put("inputSize", mbs.getAttribute(stdMBeanName, "inputSize"));
+                baramUsage.put("outputName", mbs.getAttribute(stdMBeanName, "outputName"));
+                baramUsage.put("outputSize", mbs.getAttribute(stdMBeanName, "outputSize"));
+                baramUsage.put("startedTime", mbs.getAttribute(stdMBeanName, "startedTime"));
+                baramUsage.put("currentTime", mbs.getAttribute(stdMBeanName, "currentTime"));
+                baramUsage.put("elapsedTime", mbs.getAttribute(stdMBeanName, "elapsedTime"));
+                baramUsage.put("customParameters", mbs.getAttribute(stdMBeanName, "customParameters"));
+                root.put("baramInfo", baramUsage);
+            }
             
             return this.parseJSONString(root);
         
